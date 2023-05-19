@@ -12,21 +12,21 @@ const routes: Routes = [
   },
   {
     path: 'layout',
-    canActivate: [],
+    canActivate: [isAuthenticatedGuard],
     loadChildren: () =>
       import('./core/layout/layout.module').then((m) => m.LayoutModule),
   },
-  {
-    path: 'dashboard',
-    canActivate: [isAuthenticatedGuard],
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-  {
-    path: 'users',
-    loadChildren: () =>
-      import('./modules/users/users.module').then((m) => m.UsersModule),
-  },
+  // {
+  //   path: 'dashboard',
+  //   canActivate: [],
+  //   loadChildren: () =>
+  //     import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  // },
+  // {
+  //   path: 'users',
+  //   loadChildren: () =>
+  //     import('./modules/users/users.module').then((m) => m.UsersModule),
+  // },
   {
     path: '**',
     redirectTo: 'auth',
