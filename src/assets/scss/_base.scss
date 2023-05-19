@@ -1,0 +1,87 @@
+/*//////////////////////////////////////////////////////////////////
+[ Utility ]*/
+.txt1 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.txt2 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333333;
+  text-transform: uppercase;
+}
+
+.bg1 {
+  background-color: #3b5998;
+}
+
+.bg2 {
+  background-color: #1da1f2;
+}
+
+.bg3 {
+  background-color: #ea4335;
+}
+
+/*//////////////////////////////////////////////////////////////////
+
+.container-login100 {
+  @apply flex flex-wrap items-center justify-center w-full min-h-screen p-5 bg-center bg-no-repeat bg-cover;
+}
+
+.wrap-login100 {
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/*------------------------------------------------------------------
+[ Button ]*/
+.form .form .form
+
+
+
+.form__btn
+
+/*[ TEXT ]
+///////////////////////////////////////////////////////////
+*/
+/* ------------------------------------ */
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-hov-white:hover {
+  color: white;
+}
+
+/* ------------------------------------ */
+.text-up {
+  text-transform: uppercase;
+}
+
+/* ------------------------------------ */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-middle {
+  vertical-align: middle;
+}

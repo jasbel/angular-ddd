@@ -1,0 +1,27 @@
+<button mat-icon-button class="btn-icon favorite-icon">
+  <mat-icon>favorite</mat-icon>
+</button>
+
+<button mat-icon-button class="btn-icon">
+  <mat-icon>notifications_active</mat-icon>
+</button>
+
+
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon>person</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>dialpad</mat-icon>
+    <span>Redial</span>
+  </button>
+  <button mat-menu-item disabled>
+    <mat-icon>voicemail</mat-icon>
+    <span>Check voice mail</span>
+  </button>
+  <button mat-menu-item (click)="onCloseSesion()">
+    <mat-icon>close</mat-icon>
+    <span>Cerrar Sesion</span>
+  </button>
+</mat-menu>

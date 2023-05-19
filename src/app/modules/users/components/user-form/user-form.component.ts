@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../domain/services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-form',

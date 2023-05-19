@@ -1,0 +1,66 @@
+<div>
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'required',
+      message: 'Campo'+(field ? ' '+ field + ' es' : '')+' requerido',
+      control: control
+    }"></ng-container>
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'minlength',
+      message:
+        'Deberia contener un minimo de ' +
+        (control?.errors?.minlength?.requiredLength || 1) +
+        ' caracteres',
+      control: control
+    }"></ng-container>
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'maxlength',
+      message:
+        'Deberia contener un minimo de ' +
+        (control?.errors?.maxlength?.requiredLength || 1) +
+        ' caracteres',
+      control: control
+    }"></ng-container>
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'min',
+      message:
+        'Deberia contener una cantidad mayor a ' +
+        ((control?.errors?.min?.min || '').toString().length || ' ') +
+        ' digitos.',
+      control: control
+    }"></ng-container>
+
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'max',
+      message:
+        'Deberia contener una cantidad menor de ' +
+        ((control?.errors?.max?.max  || '').toString().length || 'N') +
+        ' digitos.',
+      control: control
+    }"></ng-container>
+
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'pattern',
+      message: 'Formato del campo inválido',
+      control: control
+    }"></ng-container>
+
+  <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+      validation: 'email',
+      message: 'Formato email inválido',
+      control: control
+    }"></ng-container>
+
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control?.hasError(validation) && (control?.dirty || control?.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        <span role="alert" [class]="classText">
+          {{ message }} <ng-content></ng-content>
+        </span>
+      </div>
+    </div>
+    <!-- <ng-container *ngIf="br"><br></ng-container> -->
+  </ng-container>
+</ng-template>

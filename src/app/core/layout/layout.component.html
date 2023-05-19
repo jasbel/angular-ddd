@@ -1,22 +1,30 @@
-<div>
-  <div>
+<mat-drawer-container class="layout-container" autosize>
+  <mat-drawer #drawer class="layout-sidenav" mode="side">
+
+    <figure [style.max-width]="'120px'">
+      <img src="../../../assets/images/icons/logo.svg" />
+    </figure>
     <app-aside-menu></app-aside-menu>
-  </div>
+  </mat-drawer>
 
-  <div>
-    <app-layout-header></app-layout-header>
+  <div class="layout-sidenav-content">
+    <!-- <div class="layout-sidenav-visible">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div> -->
 
-    <div class="limiter">
-      <div
-        class="container-login100"
-        style="background-image: url('../../../../assets/images/bg-01.jpg')"
-      >
-        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-          <router-outlet></router-outlet>
-        </div>
+    <div class="layout__container">
+      <div>
+        <!-- <app-layout-header></app-layout-header> -->
+        <app-toolbar (onMenu)="drawer.toggle()" />
       </div>
-    </div>
 
-    <app-layout-footer></app-layout-footer>
+      <div class="layout__content">
+        <router-outlet></router-outlet>
+      </div>
+
+      <app-layout-footer></app-layout-footer>
+    </div>
   </div>
-</div>
+</mat-drawer-container>

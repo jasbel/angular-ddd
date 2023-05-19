@@ -10,18 +10,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./core/auth/auth.module').then((m) => m.AuthModule),
   },
+
   {
-    path: 'layout',
-    canActivate: [isAuthenticatedGuard],
+    path: '',
+    canActivate: [isAuthenticatedGuard], // TODO:
     loadChildren: () =>
       import('./core/layout/layout.module').then((m) => m.LayoutModule),
   },
-  // {
-  //   path: 'dashboard',
-  //   canActivate: [],
-  //   loadChildren: () =>
-  //     import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-  // },
   // {
   //   path: 'users',
   //   loadChildren: () =>
@@ -29,6 +24,7 @@ const routes: Routes = [
   // },
   {
     path: '**',
+    // redirectTo: '',
     redirectTo: 'auth',
   },
 ];

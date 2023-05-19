@@ -4,20 +4,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { LogoutComponent } from './pages/logout/logout.component';
+import { RegistrationPageComponent } from './pages/registration-page/registration-page.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SetPasswordComponent } from './pages/set-password/set-password.component';
+import { MatCardModule } from '@angular/material/card';
+import { AuthComponent } from './auth.component';
 
 @NgModule({
   declarations: [
+    AuthComponent,
     LoginPageComponent,
-    RegisterPageComponent,
-    AuthLayoutComponent
+    RegistrationPageComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    SetPasswordComponent,
+    LogoutComponent,
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule,
     ReactiveFormsModule,
-  ]
+    MatCardModule,
+
+    AuthRoutingModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { UserService } from './domain/services/user.service';
+import { UserService } from './services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './users.component';
 import { UserListPageComponent } from './pages/user-list-page/user-list-page.component';

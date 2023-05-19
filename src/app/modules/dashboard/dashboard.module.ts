@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { DashboardComponent } from './dashboard.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [DashboardLayoutComponent],
-  imports: [CommonModule, DashboardRoutingModule],
+  declarations: [DashboardComponent],
+  imports: [CommonModule, MatCardModule, DashboardRoutingModule],
 })
 export class DashboardModule {}

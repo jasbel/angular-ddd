@@ -1,0 +1,42 @@
+.layout {
+  &-container {
+    position: relative;
+    @apply w-full h-full;
+  }
+
+  &-sidenav-content {
+    background: linear-gradient(
+      90deg,
+      rgba(91, 192, 234, 1) 0%,
+      rgb(83, 0, 217) 92%
+    );
+    // background-image: "url('../../../../assets/images/bg-01.jpg')";
+    background-size: cover;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-sidenav {
+    padding: 20px;
+  }
+
+  &-sidenav-visible {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+  }
+
+  &__container {
+    @apply w-full h-full;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  &__content {
+    @apply flex-1 p-2;
+  }
+}

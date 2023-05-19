@@ -1,0 +1,68 @@
+<div class="flex" *ngIf="showTableMenu">
+  <div class="row justify-content-between mb-9">
+    <div class="col-12 col-sm-7 col-md-6 col-lg-5 row mb-4 mb-sm-0">
+      <div class="col-6">
+        <div class="d-flex align-items-center">
+          <span class="me-3">Páginas</span>
+          <div class="input-counter input-counter-sm">
+            <span class="to up" (click)="pageChange(true)">+</span>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              name="pages"
+              [value]="page"
+              min="pageMin"
+              max="pageMax"
+              [disabled]="true"
+            />
+            <span class="to down" (click)="pageChange(false)">-</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="d-flex align-items-center">
+          <span class="me-3">Filas</span>
+          <div class="input-counter input-counter-sm">
+            <span class="to up" (click)="pageLenChange(true)">+</span>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              name="rows"
+              [value]="pageLength"
+              step="1"
+              [disabled]="true"
+            />
+            <span class="to down" (click)="pageLenChange(false)">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-5 col-md-6 col-lg-7 filter-table__content-filter">
+      <div class="filter-table__search">
+        <input
+          id="table-complete-search"
+          type="text"
+          class="form-control form-control-sm form-input-search"
+          name="searchTerm"
+          placeholder="Búsqueda rápida"
+          (keyup)="search($event)"
+        />
+      </div>
+
+      <ng-container *ngIf="dataFilter.active">
+        <div class="select-wrap select-wrap-sm filter-table__select-active">
+          <select
+            class="form-select form-select-sm"
+            name="centerType"
+            [value]="isActive"
+            (change)="filterActive($event)"
+          >
+            <option value="">Todos</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
