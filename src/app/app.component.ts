@@ -1,8 +1,9 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, AuthStatus } from './core/auth';
 
-import { AuthService } from './auth/services/auth.service';
-import { AuthStatus } from './auth/interfaces';
+// import { AuthService } from './auth/services/auth.service';
+// import { AuthStatus } from './auth/interfaces';
 
 @Component({
   selector: 'app-root',
