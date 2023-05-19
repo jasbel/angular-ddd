@@ -1,0 +1,47 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>First Name</label>
+    <input type="text" formControlName="firstName" required />
+    <div
+      *ngIf="
+        formControls.firstName.invalid &&
+        (formControls.firstName.dirty || submitted)
+      "
+    >
+      <div *ngIf="formControls.firstName.errors!['required']">
+        First Name is required
+      </div>
+    </div>
+  </div>
+  <div>
+    <label>Last Name</label>
+    <input type="text" formControlName="lastName" required />
+    <div
+      *ngIf="
+        formControls.lastName.invalid &&
+        (formControls.lastName.dirty || submitted)
+      "
+    >
+      <div *ngIf="formControls.lastName.errors!['required']">
+        Last Name is required
+      </div>
+    </div>
+  </div>
+  <div>
+    <label>Email</label>
+    <input type="email" formControlName="email" required />
+    <div
+      *ngIf="
+        formControls.email.invalid && (formControls.email.dirty || submitted)
+      "
+    >
+      <div *ngIf="formControls.email.errors!['required']">
+        Email is required
+      </div>
+      <div *ngIf="formControls.email.errors!['email']">
+        Invalid email format
+      </div>
+    </div>
+  </div>
+  <button type="submit">Create User</button>
+</form>
