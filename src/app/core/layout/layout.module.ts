@@ -16,6 +16,7 @@ import { LayoutComponent } from './layout.component';
 
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -34,6 +35,7 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
     MatTreeModule,
     MatToolbarModule,
     MatMenuModule,
+    SharedModule,
     LayoutRoutingModule,
   ],
 })

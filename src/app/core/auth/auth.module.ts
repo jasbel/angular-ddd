@@ -11,6 +11,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { SetPasswordComponent } from './pages/set-password/set-password.component';
 import { MatCardModule } from '@angular/material/card';
 import { AuthComponent } from './auth.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AuthComponent } from './auth.component';
     ReactiveFormsModule,
     MatCardModule,
 
+    SharedModule,
     AuthRoutingModule,
   ],
 })

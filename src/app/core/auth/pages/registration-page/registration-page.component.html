@@ -1,34 +1,23 @@
 <form class="form" autocomplete="off" [formGroup]="form" (ngSubmit)="submit()">
-  <span class="pb-5 form__title"> Crear Cuenta </span>
+  <form-title> Crear Cuenta </form-title>
 
-  <div class="form__input--100">
-    <span class="form__label--100">Correo</span>
+  <input-control label="Correo">
     <input class="form__input" type="email" formControlName="email" placeholder="Correo electrónico" />
-    <span class="form__input--focus"></span>
-  </div>
+  </input-control>
 
-  <div class="form__input--100">
-    <span class="form__label--100">Contraseña</span>
+  <input-control label="contraseña">
     <input class="form__input" type="password" formControlName="password" placeholder="Ingrese su contraseña" />
-    <span class="form__input--focus"></span>
-  </div>
+  </input-control>
 
-  <div class="form__input--100">
-    <span class="form__label--100">Repetir Contraseña</span>
+  <input-control label="Repita su contraseña">
     <input class="form__input" type="password" formControlName="cPassword" placeholder="Repita su contraseña" />
-    <span class="form__input--focus"></span>
-  </div>
+  </input-control>
 
-  <div class="pt-1 pb-4 text-right"></div>
-
-  <div class="form__btn-container">
-    <div class="form__btn-content">
-      <div class="form__btn-bg"></div>
-      <button class="form__btn" [disabled]="form.invalid" type="submit">
-        Crear Cuenta
-      </button>
-    </div>
-  </div>
+  <submit-control>
+    <button class="form__btn" [disabled]="form.invalid" type="submit">
+      Crear Cuenta
+    </button>
+  </submit-control>
 
   <div class="flex flex-col items-center pt-10">
     <a routerLink="/auth/login"> Volver a Ingresar </a>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BreadCrumbEs, IBreadCrumb } from 'src/app/core/layout';
+// import { BreadCrumbEs, IBreadCrumb } from 'src/app/core/layout';
 import {
   ETypeTitle,
   sModuleName,
@@ -8,8 +8,8 @@ import {
   TTypeTitle,
 } from 'src/app/utils';
 
-export const TitleEs: { [key in TPath]: string } = {
-  ...BreadCrumbEs,
+export const TitleEs: { [key in string/* TPath */]: string } = {
+  // ...BreadCrumbEs,
 };
 
 @Component({
@@ -18,7 +18,7 @@ export const TitleEs: { [key in TPath]: string } = {
   styleUrls: ['./header-title.component.scss'],
 })
 export class HeaderTitleComponent implements OnInit {
-  @Input() breadcrumbs: IBreadCrumb[] = [];
+  @Input() breadcrumbs: any[] = [];
   @Input() title!: string;
   @Input() titleAdd: string = 'Agregar';
   @Input() className: string = '';
