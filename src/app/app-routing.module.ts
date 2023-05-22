@@ -13,15 +13,12 @@ const routes: Routes = [
 
   {
     path: '',
-    canActivate: [isAuthenticatedGuard], // TODO:
+    // path: '',
+    canActivate: [isNotAuthenticatedGuard /* isAuthenticatedGuard */], // TODO:
     loadChildren: () =>
       import('./core/layout/layout.module').then((m) => m.LayoutModule),
   },
-  // {
-  //   path: 'users',
-  //   loadChildren: () =>
-  //     import('./modules/users/users.module').then((m) => m.UsersModule),
-  // },
+
   {
     path: '**',
     // redirectTo: '',
@@ -30,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -1,5 +1,5 @@
 <mat-drawer-container class="layout-container" autosize>
-  <mat-drawer #drawer class="layout-sidenav" mode="side">
+  <mat-drawer #drawer class="layout-sidenav" mode="side" opened="true">
     <logo></logo>
     <app-aside-menu></app-aside-menu>
   </mat-drawer>
@@ -17,7 +17,7 @@
         <app-toolbar (onMenu)="drawer.toggle()" />
       </div>
 
-      <div class="layout__content">
+      <div class="container mx-auto layout__content">
         <router-outlet></router-outlet>
       </div>
 

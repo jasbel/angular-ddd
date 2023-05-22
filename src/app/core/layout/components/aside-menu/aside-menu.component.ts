@@ -11,51 +11,69 @@ import {
  */
 interface FoodNode {
   name: string;
+  link: string;
   children?: FoodNode[];
 }
 
 const TREE_DATA: FoodNode[] = [
   {
-    name: 'Fruit',
-    children: [{ name: 'Apple' }, { name: 'Banana' }, { name: 'Fruit loops' }],
-  },
-  {
-    name: 'Vegetables',
+    name: 'Dashboard',
+    link: '',
     children: [
       {
-        name: 'Green',
-        children: [{ name: 'Broccoli' }, { name: 'Brussels sprouts' }],
+        name: 'Create',
+        link: '/users',
       },
       {
-        name: 'Orange',
-        children: [{ name: 'Pumpkins' }, { name: 'Carrots' }],
+        name: 'List',
+        link: '/dashboard',
+      },
+    ],
+  },
+  {
+    name: 'Users',
+    link: '',
+    children: [
+      {
+        name: 'Create',
+        link: '/users',
+      },
+      {
+        name: 'List',
+        link: '/dashboard',
+      },
+      {
+        name: 'Setting',
+        link: '',
+        children: [{ name: 'Config', link: '/users' }],
       },
     ],
   },
 ];
 
 /** Flat node with expandable and level information */
-interface ExampleFlatNode {
+interface IFlatNode {
   expandable: boolean;
   name: string;
+  link: string;
   level: number;
 }
 
 @Component({
   selector: 'app-aside-menu',
   templateUrl: './aside-menu.component.html',
-
 })
 export class AsideMenuComponent {
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
+      link: node.link,
       level: level,
     };
   };
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
+  treeControl = new FlatTreeControl<IFlatNode>(
     (node) => node.level,
     (node) => node.expandable
   );
@@ -73,5 +91,9 @@ export class AsideMenuComponent {
     this.dataSource.data = TREE_DATA;
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: IFlatNode) => node.expandable;
+
+  openView() {
+    console.log('working');
+  }
 }
