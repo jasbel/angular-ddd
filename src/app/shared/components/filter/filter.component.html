@@ -1,0 +1,59 @@
+<div class="filter__wrapper justify-content-start" [formGroup]="form">
+  <ng-container formArrayName="filters" *ngFor="let filter of formItems.controls; let i = index">
+    <div [formGroupName]="i" class="filter__content">
+      <ng-container *ngIf="filter.controls.type.value === 'multicomplete'">
+        <<input type="text" (change)="onChangeCheckbox(!filter.controls.value.value, filter.controls.field.value, i)" />
+      </ng-container>
+
+      <ng-container *ngIf="filter.controls.type.value === 'text'">
+        <input type="text" (change)="onChangeCheckbox(!filter.controls.value.value, filter.controls.field.value, i)" />
+      </ng-container>
+
+      <ng-container *ngIf="filter.controls.type.value === 'date'">
+        <input type="date" (change)="onChangeCheckbox(!filter.controls.value.value, filter.controls.field.value, i)" />
+      </ng-container>
+
+      <ng-container *ngIf="filter.controls.type.value === 'datetime'">
+        <input type="date" (change)="onChangeCheckbox(!filter.controls.value.value, filter.controls.field.value, i)" />
+      </ng-container>
+
+      <ng-container *ngIf="filter.controls.type.value === 'checkbox'">
+        <div class="filterForm__control filterForm__control--check">
+          <label class="filterForm__label form-check-label ps-2 me-3">{{ filter.controls.label.value }}
+            <input class="form-check-input" type="checkbox"
+              (change)="onChangeCheckbox(!filter.controls.value.value, filter.controls.field.value, i)" />
+            <span class="filterForm__icon-clear" (click)="onChangeCheckbox('', filter.controls.field.value, i)"><i
+                class="fas fa-times"></i></span>
+          </label>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <div class="filter__content filter__content--no-border" style="min-width: 0; flex: 1; text-align: end"></div>
+</div>
+
+<div class="py-2 filter__wrapper-extra filter__wrapper" [formGroup]="form" *ngIf="withMultiData">
+  <ng-container formArrayName="filters" *ngFor="let filter of formItems.controls; let i = index">
+    <ng-container *ngIf="filter.controls.type.value === 'multicomplete'">
+      <ng-container *ngIf="filter.controls.selects.value.length">
+        <div [formGroupName]="i" class="py-1 w-100">
+          <label class="ms-4">Filtro {{ filter.controls.label.value }}</label>
+
+          <!-- <ng-container formArrayName="selects" *ngFor="let item of filter.controls.selects.controls; let j = index">
+            <div class="d-inline-flex" [formGroupName]="j">
+              <item-close (onRemove)="onRemoveSelect(i, j)">
+                <span style="font-size: 0.85rem" class="ms-1">
+                  {{ item.value.name }}
+                </span>
+              </item-close>
+            </div>
+          </ng-container> -->
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<!-- <pre>{{ form.value | json }}</pre> -->
+<!-- <pre>{{ dataAutocomplete | json }}</pre> -->

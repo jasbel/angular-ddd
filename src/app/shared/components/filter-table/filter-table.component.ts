@@ -27,12 +27,10 @@ export class FilterTableComponent implements OnInit {
   // @Input() initFilter: { active?: boolean };
 
   @Output('pageChange') _pageChange: EventEmitter<boolean> = new EventEmitter();
-  @Output('pageLenChange') _pageLenChange: EventEmitter<boolean> =
-    new EventEmitter();
+  @Output('pageLenChange') _pageLenChange: EventEmitter<boolean> = new EventEmitter();
   // @Output('search') _search: EventEmitter<string> = new EventEmitter();
   @Output('search') _search: EventEmitter<KeyboardEvent> = new EventEmitter();
-  @Output('filterActive') _filterActive: EventEmitter<Event> =
-    new EventEmitter();
+  @Output('filterActive') _filterActive: EventEmitter<Event> = new EventEmitter();
 
   isActive: '' | '1' | '0' = '';
 

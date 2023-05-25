@@ -10,6 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './users.component';
 import { UserListPageComponent } from './pages/user-list-page/user-list-page.component';
 import { UsersRoutingModule } from './users-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +23,16 @@ import { UsersRoutingModule } from './users-routing.module';
     UserListComponent,
     UserDetailComponent,
     UserFormComponent,
+    UserTableComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    UsersRoutingModule, // Agrega el módulo RouterModule si necesitas utilizar rutas dentro del módulo
+    MatTableModule,
+    MatSortModule,
+    MatCheckboxModule,
+    SharedModule,
+    UsersRoutingModule,
   ],
   providers: [UserService],
   exports: [UserListComponent, UserDetailComponent, UserFormComponent],

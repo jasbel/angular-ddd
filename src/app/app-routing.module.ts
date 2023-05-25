@@ -4,19 +4,17 @@ import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/auth';
 // import { isNotAuthenticatedGuard, isAuthenticatedGuard } from './auth/guards';
 
 const routes: Routes = [
-  {
+  /* {
     path: 'auth',
     canActivate: [isNotAuthenticatedGuard],
-    loadChildren: () =>
-      import('./core/auth/auth.module').then((m) => m.AuthModule),
-  },
+    loadChildren: () => import('./core/auth/auth.module').then((m) => m.AuthModule),
+  }, */
 
   {
     path: '',
     // path: '',
     canActivate: [isNotAuthenticatedGuard /* isAuthenticatedGuard */], // TODO:
-    loadChildren: () =>
-      import('./core/layout/layout.module').then((m) => m.LayoutModule),
+    loadChildren: () => import('./core/layout/layout.module').then((m) => m.LayoutModule),
   },
 
   {

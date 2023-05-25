@@ -1,0 +1,27 @@
+.disabled {
+  pointer-events: none;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.label {
+  color: $color-secondary;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.text-input {
+  line-height: 1;
+  font-size: 15px;
+  // @include responsive(fz, 15, 18, $xl, $md);
+  @include mq(fz, 18, $xl);
+  font-weight: 300;
+  color: $text-gray;
+}
+
+/* Mover a global */
+.whitespace-nowrap {
+  white-space: nowrap;
+}

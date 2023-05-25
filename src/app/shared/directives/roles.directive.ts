@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { AuthRoleService } from 'src/app/modules/auth';
-import { IPermissionActions, sModuleName, TActionPermission, TRole } from 'src/app/utils';
+import { AuthRoleService } from 'src/app/core/auth/services/auth-role.service';
+import { TRole } from 'src/app/utils';
 // import { PermissionManagerService } from './permission-manager.service';
 
 @Directive({
@@ -10,23 +10,23 @@ export class RolesDirective implements OnInit {
   private roles: TRole[] = [];
 
   constructor(
-    private templateRef: TemplateRef<any>,
+    private templateRef: TemplateRef<unknown>,
     private viewContainer: ViewContainerRef, // private userService: UserService
     private authRole: AuthRoleService
   ) {}
 
   ngOnInit(): void {
-    this.updateView2();
+    this.viewUpdate();
   }
 
   @Input()
   set appRoles(roles: TRole[]) {
     this.roles = roles;
 
-    this.updateView2();
+    this.viewUpdate();
   }
 
-  private updateView2(): void {
+  private viewUpdate(): void {
     this.viewContainer.clear();
     if (this.checkWithRole()) this.viewContainer.createEmbeddedView(this.templateRef);
   }

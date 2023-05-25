@@ -2,7 +2,9 @@ import { IModelSingle, IOption } from '../interfaces';
 
 export const clearNullorEmpty = <T = unknown>({ ...obj }: T): T => {
   const _obj = obj as any;
-  Object.keys(obj || {}).forEach((k) => (_obj[k] === '' || _obj[k] === 'null') && _obj[k] !== undefined && delete _obj[k]);
+  Object.keys(obj || {}).forEach(
+    (k) => (_obj[k] === '' || _obj[k] === 'null') && _obj[k] !== undefined && delete _obj[k]
+  );
   return _obj;
 };
 
@@ -10,8 +12,19 @@ export const clearNullorEmptyorUndefined = <T = unknown>({ ...obj }: T): T => {
   if (!obj) return { ...obj };
 
   const _obj = obj as any;
-  Object.keys(obj || {}).forEach((k) => (_obj[k] === '' || _obj[k] === 'null' || _obj[k] === null || _obj[k] === undefined) && delete _obj[k]);
+  Object.keys(obj || {}).forEach(
+    (k) => (_obj[k] === '' || _obj[k] === 'null' || _obj[k] === null || _obj[k] === undefined) && delete _obj[k]
+  );
   return _obj;
+};
+
+export const removeNullEmptyOrUndefined = ({ ...obj }: any) => {
+  if (!obj) return obj;
+
+  Object.keys(obj).forEach(
+    (k) => (obj[k] === '' || `${obj[k]}` === 'null' || obj[k] === 'null' || obj[k] === undefined) && delete obj[k]
+  );
+  return obj;
 };
 
 export const getHashToObject = <T>(obj: T, seed = 0) => {
@@ -53,6 +66,9 @@ export const enumToModelList = <T, R>(enumObj: T, obj?: { [key in string]: strin
 };
 
 export const enumToOptionList = <T extends object>(enumObj: T): IOption<keyof T>[] => {
-  const _list: IOption<keyof T>[] = Object.entries(enumObj).map(([k, v]) => ({ value: k as keyof T, label: v as string }));
+  const _list: IOption<keyof T>[] = Object.entries(enumObj).map(([k, v]) => ({
+    value: k as keyof T,
+    label: v as string,
+  }));
   return _list;
 };

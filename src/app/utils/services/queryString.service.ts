@@ -71,9 +71,7 @@ export class QueryString<T extends object, F = T> {
   };
 
   public getFilter = (_filter: keyof Partial<F>): TFilterValue | undefined => {
-    const _filterValue = (this.dataQuery?.filter || ({} as Partial<F>))[
-      _filter
-    ] as TFilterValue | undefined;
+    const _filterValue = (this.dataQuery?.filter || ({} as Partial<F>))[_filter] as TFilterValue | undefined;
 
     return _filterValue;
   };
@@ -81,17 +79,13 @@ export class QueryString<T extends object, F = T> {
   public setSort = (sort: ISort<Partial<T>>) => {
     this.dataQuery = {
       ...this.dataQuery,
-      order: {
-        /* ...this.dataQuery.order, */ ...removeNullEmptyOrUndefined(sort),
-      },
+      order: { ...removeNullEmptyOrUndefined(sort) },
     };
     this.changeQueryString();
   };
 
   public setSearch = (q: string) => {
-    const _filter =
-      this.dataQuery.filter ||
-      ({} as Partial<F> & { search?: string | undefined });
+    const _filter = this.dataQuery.filter || ({} as Partial<F> & { search?: string | undefined });
     _filter!.search = q;
     this.dataQuery = {
       ...this.dataQuery,
@@ -117,13 +111,6 @@ export class QueryString<T extends object, F = T> {
 
   private changeQueryString = () => {
     // clear undefined
-    const _queryString = getQueryString<T, F>(this.dataQuery);
-    this.queryString = _queryString;
-    consoleLog(this.queryString);
-    // callback && callback();
-  };
-
-  private clearNullOrUndefinedOrEmpty = (dt: object) => {
     const _queryString = getQueryString<T, F>(this.dataQuery);
     this.queryString = _queryString;
     consoleLog(this.queryString);

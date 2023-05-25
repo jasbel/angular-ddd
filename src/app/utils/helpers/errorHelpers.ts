@@ -13,7 +13,9 @@ export const getNotifyString = <T = unknown>(
   if (!getIsStatusError(statuscode)) return `Desconocido: ${_dataError}`;
 
   const dataErrorWithMsgEs = getMsgToEs(Object.prototype.toString.call(data) === '[object Array]' ? data[0] : data);
-  const dataError = (getIsStatusError(statuscode) ? getDataErrorToFormatDataError(dataErrorWithMsgEs) : []) as IErrorObjectK<T>[];
+  const dataError = (
+    getIsStatusError(statuscode) ? getDataErrorToFormatDataError(dataErrorWithMsgEs) : []
+  ) as IErrorObjectK<T>[];
   const dataErrorEs = getErrorNotyListToEs(dataError, model as { [key in TKey<Partial<T>>]: string });
   const dataGenerate = generateMessages(dataErrorEs);
 
@@ -25,24 +27,14 @@ export const getNotifyString = <T = unknown>(
     `;
 };
 
-/* Complement  */
-/** @example{"[bankAccounts][1][accountNumber]": ["IS_BLANK_ERROR"]} */
 type TDataModelError<T = string> = { [key: string]: (keyof T)[] };
 type TKey<T> = keyof Partial<T>;
 type IErrorObjectK<T> = IErrorObject<TKey<T>>;
 
-/**
- * @param data  [
-    { field: "address",                                     msg: ["IS_BLANK_ERROR", "IS_NOT_FOUND"] },
-    { section: "bankAccounts", row: "1", field: "accountNumber", msg: ["IS_BLANK_ERROR"]}
-  ]
- * @param model  { address: "ADDRESS", contact: "CONTACT", bankAccounts: "BANKACCOUNTS" };
- * @returns  [
-    { field: "ADDRESS",                                     msg: ["IS_BLANK_ERROR", "IS_NOT_FOUND"] },
-    { section: "BANKACCOUNTS", row: "1", field: "accountNumber", msg: ["IS_BLANK_ERROR"]}
-  ]
- */
-const getErrorNotyListToEs = <T = unknown>(data: IErrorObjectK<T>[], model?: { [key in TKey<Partial<T>>]: string }): IErrorObjectK<T>[] => {
+const getErrorNotyListToEs = <T = unknown>(
+  data: IErrorObjectK<T>[],
+  model?: { [key in TKey<Partial<T>>]: string }
+): IErrorObjectK<T>[] => {
   if (!model) return data;
 
   const dateEs: IErrorObjectK<T>[] = data.map((obj) => {
@@ -56,17 +48,9 @@ const getErrorNotyListToEs = <T = unknown>(data: IErrorObjectK<T>[], model?: { [
   return dateEs;
 };
 
-/**
- * @param data  {
-    "[address]":                        ["IS_BLANK_ERROR", "IS_NOT_FOUND"  ],
-    "[bankAccounts][1][accountNumber]": ["IS_BLANK_ERROR" ]
-  }
- * @returns  [
-    { field: "address",                                     msg: ["IS_BLANK_ERROR", "IS_NOT_FOUND"] },
-    { section: "bankAccounts", row: "1", field: "accountNumber", msg: ["IS_BLANK_ERROR"]}
-  ]
- */
-const getDataErrorToFormatDataError = <T = unknown>(dataModelError: TDataModelError<T>): Partial<IErrorObjectK<T>>[] => {
+const getDataErrorToFormatDataError = <T = unknown>(
+  dataModelError: TDataModelError<T>
+): Partial<IErrorObjectK<T>>[] => {
   if (!dataModelError) return [];
 
   const output = [] as Partial<IErrorObjectK<T>>[];
@@ -102,7 +86,8 @@ const getDataErrorToFormatDataError = <T = unknown>(dataModelError: TDataModelEr
 const generateMessages = (output: any): string[] => {
   const template1 = 'El campo <b>${field}</b> : <em>${msg}</em>';
   const template2 = 'En la seccion <b>${section}</b>, el campo <b>${field}</b> : <em>${msg}</em>';
-  const template3 = 'En la seccion <b>${section}</b> fila <b><em>${row}</em></b>, el campo <b>${field}</b> : <em>${msg}</em>';
+  const template3 =
+    'En la seccion <b>${section}</b> fila <b><em>${row}</em></b>, el campo <b>${field}</b> : <em>${msg}</em>';
 
   const messages = [];
   for (const item of output) {
@@ -114,7 +99,10 @@ const generateMessages = (output: any): string[] => {
         .replace('${msg}', item.msg.join(', '));
       messages.push(msg);
     } else if (item.section && item.field) {
-      const msg = template2.replace('${section}', item.section).replace('${field}', item.field).replace('${msg}', item.msg.join(', '));
+      const msg = template2
+        .replace('${section}', item.section)
+        .replace('${field}', item.field)
+        .replace('${msg}', item.msg.join(', '));
       messages.push(msg);
     } else if (item.field) {
       const msg = template1.replace('${field}', item.field).replace('${msg}', item.msg.join(', '));

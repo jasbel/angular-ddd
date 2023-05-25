@@ -58,7 +58,7 @@ export interface ICreatedDate {
 }
 
 export interface IHeaders {
-  normalizedNames: any;
+  normalizedNames: string;
   lazyUpdate: null;
 }
 

@@ -1,15 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  finalize,
-  map,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, Observable, catchError, finalize, map, of, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { LocalStorageService } from 'src/app/utils/services';
@@ -17,12 +8,7 @@ import { ApiResponseModel } from 'src/app/utils';
 import { environment } from 'src/environments/environments';
 import { AuthHTTPService } from './auth-http';
 import { AuthUser, UserAuthModel } from '../models';
-import {
-  AuthStatus,
-  CheckTokenResponse,
-  LoginResponse,
-  IUser,
-} from '../interfaces';
+import { AuthStatus, CheckTokenResponse, LoginResponse, IUser } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -44,11 +30,7 @@ export class AuthService {
     return this._currentUser();
   }
 
-  constructor(
-    private authHttpService: AuthHTTPService,
-    private router: Router,
-    private local: LocalStorageService
-  ) {
+  constructor(private authHttpService: AuthHTTPService, private router: Router, private local: LocalStorageService) {
     this.checkAuthStatus().subscribe();
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -113,7 +95,7 @@ export class AuthService {
     );
   }
 
-  forgotPassword(email: string): Observable<boolean> {
+  forgotPassword(email: string): Observable<ApiResponseModel> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.forgotPassword(email).pipe(
       map((res) => res),
@@ -122,10 +104,7 @@ export class AuthService {
     );
   }
 
-  resetPassword(
-    code: string,
-    password: string
-  ): Observable<UserAuthModel | undefined> {
+  resetPassword(code: string, password: string): Observable<UserAuthModel | undefined> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.resetPassword(code, password).pipe(
       catchError((err) => of(err)),
@@ -133,10 +112,7 @@ export class AuthService {
     );
   }
 
-  setPassword(
-    code: string,
-    password: string
-  ): Observable<ApiResponseModel | undefined> {
+  setPassword(code: string, password: string): Observable<ApiResponseModel | undefined> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.resetPassword(code, password).pipe(
       catchError((err) => of(undefined)),

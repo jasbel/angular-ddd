@@ -6,13 +6,6 @@ export const toUndefined = (str: string | null | undefined) => {
   return str;
 };
 
-export const removeNullable = ({ ...obj }: any) => {
-  if (!obj) return obj;
-
-  Object.keys(obj).forEach((k) => (!obj[k] || obj[k] === 'null') && obj[k] !== undefined && delete obj[k]);
-  return obj;
-};
-
 export const isValidCSVFile = (str: string) => {
   return !!(str?.toString() || '').endsWith('.csv');
 };
@@ -20,12 +13,7 @@ export const isValidExcelFile = (str: string) => {
   return !!(str?.toString() || '').endsWith('.xls') || !!(str?.toString() || '').endsWith('.xlsx');
 };
 
-export const removeNullEmptyOrUndefined = ({ ...obj }: any) => {
-  if (!obj) return obj;
 
-  Object.keys(obj).forEach((k) => (obj[k] === '' || `${obj[k]}` === 'null' || obj[k] === 'null' || obj[k] === undefined) && delete obj[k]);
-  return obj;
-};
 
 export const checkIfValidUUID = (str: string) => {
   // Regular expression to check if string is a valid UUID

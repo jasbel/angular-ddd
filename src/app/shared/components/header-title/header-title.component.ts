@@ -18,7 +18,6 @@ export const TitleEs: { [key in string/* TPath */]: string } = {
   styleUrls: ['./header-title.component.scss'],
 })
 export class HeaderTitleComponent implements OnInit {
-  @Input() breadcrumbs: any[] = [];
   @Input() title!: string;
   @Input() titleAdd: string = 'Agregar';
   @Input() className: string = '';

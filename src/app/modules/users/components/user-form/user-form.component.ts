@@ -36,7 +36,7 @@ export class UserFormComponent implements OnInit {
     }
 
     const user = {
-      id: Math.random(),
+      id: `${Math.random()}`,
       firstName: this.formControls.firstName.value!,
       lastName: this.formControls.lastName.value!,
       email: this.formControls.email.value!,

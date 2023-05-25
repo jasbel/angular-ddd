@@ -1,9 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import {
-  NonNullableFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { NonNullableFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
@@ -16,14 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ResetPasswordComponent implements OnInit, OnDestroy {
   resetForm = this.fb.group({
-    password: [
-      null,
-      Validators.compose([
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(255),
-      ]),
-    ],
+    password: [null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(255)])],
   });
   hasError: boolean = false;
   isLoading$: Observable<boolean>;
@@ -54,8 +43,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     this.code = this.route.snapshot.paramMap.get('code') || '';
 
     // get return url from route parameters or default to '/'
-    this.returnUrl =
-      this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
   }
 
   get f() {
@@ -64,16 +52,13 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   submit() {
     this.hasError = false;
-    const loginSubscr = this.authService
-      .resetPassword(this.code, this.f.password.value!)
-      .pipe(first())
-      .subscribe((dataSubmit: any) => {
-        if (dataSubmit) {
-          this.router.navigate([this.returnUrl]);
-        } else {
-          this.hasError = true;
-        }
-      });
+    const loginSubscr = this.authService.resetPassword(this.code, this.f.password.value!).subscribe((res) => {
+      if (res) {
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.hasError = true;
+      }
+    });
     this.unsubscribe.push(loginSubscr);
   }
 

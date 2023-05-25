@@ -5,4 +5,3 @@ export * from './http.service';
 export * from './error-server.service';
 export * from './local-storage.service';
 export * from './router.service';
-export * from './module-permission.store';

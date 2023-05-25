@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-error-display',
@@ -6,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styles: [],
 })
 export class ErrorDisplayComponent implements OnInit {
-  // @Input() br: boolean = false;
   @Input('control') control: any;
   @Input() 'field': string = '';
   @Input() classText: string = '';

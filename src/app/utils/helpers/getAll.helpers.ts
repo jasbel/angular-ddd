@@ -1,5 +1,5 @@
 import { IQueryString, ISort } from '../interfaces';
-import { removeNullEmptyOrUndefined } from './string.helpers';
+import { removeNullEmptyOrUndefined } from './object.helper';
 
 /**
  * @param {active: '', search: '123', other: false, zero: 0, nullys: 'null', }
@@ -53,7 +53,7 @@ export const getSortString = <T extends Object>(sort: ISort<T>): string => {
   return currentSort;
 };
 
-export const initQueryAll: IQueryString<any> = {
+export const initQueryAll: IQueryString<unknown> = {
   pagesize: 1000,
 };
 export const getInitQuery = () => getQueryString(initQueryAll);

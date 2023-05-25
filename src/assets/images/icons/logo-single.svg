@@ -1,0 +1,24 @@
+<svg class="svgs logo" version="1.1" id="alvic-logo" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 71 70"
+  style="enable-background:new 0 0 70 70;" xml:space="preserve">
+  <style type="text/css">
+    .alcircle {
+      fill: #1CAFE6;
+    }
+
+    .alline {
+      fill: #FFFFFF;
+    }
+
+    .altext {
+      fill: #737373;
+    }
+  </style>
+  <style class="darkreader darkreader--sync" media="screen"></style>
+  <g>
+    <path id="alcircle" class="alcircle" d="M70.48,35c0-19.33-15.67-35-35-35c-19.33,0-35,15.67-35,35c0,19.33,15.67,35,35,35
+		C54.81,70,70.48,54.33,70.48,35"></path>
+    <polygon id="alline2" class="alline" points="37.8,24.8 30.04,45.51 21.75,45.51 29.51,24.8 	"></polygon>
+    <polygon id="alline" class="alline" points="49.19,24.8 41.42,45.51 33.13,45.51 40.9,24.8 	"></polygon>
+  </g>
+</svg>

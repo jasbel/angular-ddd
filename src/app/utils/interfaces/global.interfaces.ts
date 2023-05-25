@@ -17,50 +17,12 @@ export type TDateDB = `${number}-${number}-${number}`;
 
 export enum ERole {
   super_admin = 'Administrador',
-  doctor = 'Medico',
-  group_manager = 'Director de grupo',
-  center_manager = 'Director de centro',
-  manager = 'Gerente',
-  shr = 'RHS (Responsable higiénico sanitario)',
-  nurse = 'DUE (Enfermera)',
-  social_worker = 'Trabajadora social',
-  social_educator = 'Educadora social',
-  psychologist = 'Psicólogo',
-  auxiliary = 'Auxiliar',
-  physiotherapist = 'Fisioterapeuta',
-  occupational_therapist = 'Terapeuta ocupacional',
-  hairdresser = 'Peluquera',
-  podiatrist = 'Podólogo',
-  supervisor = 'Supervisor',
-  sociocultural_animator = 'Animador sociocultural',
-  dietitian = 'Dietista',
-  pharmacist = 'Farmacéutico',
-  family = 'Familiar',
 }
 export type TRole = keyof typeof ERole;
 
 export enum EModuleNameToEs {
-  activities = 'Actividades',
-  billings = 'Facturación',
-  centers = 'Gestión Centros',
-  cleaning_maintenance = 'Limpieza y mantenimiento',
-  contracts_documentation = 'Contratos y documentación',
-  crm = 'Gestión comercial/CRM ',
-  daily_living_activities = 'Gestión Registros AVDs',
-  dashboard_reporting = 'Dashboard/Reporting',
-  employees = 'Gestión Trabajadores', // 'Empleados',
-  groups = 'Gestión Grupos',
-  inspection = 'Inspección',
-  kitchen = 'Cocina',
-  laundry = 'Lavandería',
-  resident_incidents = 'Incidencias residentes',
-  residents = 'Residentes',
   roles = 'Gestión Roles',
-  pharmacies = 'Farmacias',
-  users = 'Gestión Usuarios', //'Gestión Usuarios/Trabajadores',
-  work_calendar = 'Calendario de Avisos',
-  center_occupation = 'Ocupacion Centro',
-  template_manager = 'Gestión de Plantillas',
+  users = 'Gestión Usuarios',
 }
 
 export enum EMonth {
@@ -116,59 +78,37 @@ export enum EWeekDay {
 
 export type TNumWeekly = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type TNumBiweekly = TNumWeekly | 8 | 9 | 10 | 11 | 12 | 13 | 14;
-export type TNumMonth = TNumBiweekly | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31;
+export type TNumMonth =
+  | TNumBiweekly
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22
+  | 23
+  | 24
+  | 25
+  | 26
+  | 27
+  | 28
+  | 29
+  | 30
+  | 31;
 
 export type TWeekDay = keyof typeof EWeekDay;
 export type TWeekDayES = TypeFromEnum<EWeekDay>;
 
-/* type ValueOf<T> = T[keyof T];
-type Foo = { a: string, b: number };
-type ValueOfFoo = ValueOf<EWeekDay>;
-
-type FooType = keyof Record<EWeekDay, string>;
-const a: ValueOfFoo = 'asdf';
-*/
-
-// const ModuleNameToEs: { [key in Exclude<sModuleName, '' | 'super'>]: string } = {};
 export type sModuleName = keyof typeof EModuleNameToEs | 'generic' | '';
 export type TModuleToEs = { [key in keyof typeof EModuleNameToEs]: string };
 
-export type TActionPermissionCore = 'create' | 'update' | 'list' | 'delete' | 'history' | 'register';
-export type TActionPermission = TActionPermissionCore | 'all' | 'chat' | 'login-center' | '_' | 'any';
+export type TActionPermissionCore = 'create' | 'update' | 'list' | 'delete';
+export type TActionPermission = TActionPermissionCore | 'all';
 export type TModulePermission = `${sModuleName}_${TActionPermission}`;
 
 export type IPermissionActions = { [key in sModuleName]: TActionPermission[] };
-
-export enum EMeal {
-  breakfast = 'Desayuno',
-  lunch = 'Comida',
-  snack = 'Merienda',
-  dinner = 'Cena',
-  after = 'Recena',
-}
-export type TMeal = keyof typeof EMeal;
-
-export enum EMeal2 {
-  'Breakfast' = 'Desayuno',
-  'Lunch' = 'Comida',
-  'Snack' = 'Merienda',
-  'Dinner' = 'Cena',
-  'Second Dinner' = 'Resopon',
-}
-export type TMeal2 = keyof typeof EMeal2;
-export type TMealEs2 = TypeFromEnum<EMeal2>;
-
-export enum ERecursiveDate {
-  'non' = 'Nunca', //'No recurrente',
-  'date' = 'Fecha', // fecha
-  'daily' = 'Diariamente', // dias
-  'weekly' = 'Semanalmente',
-  'biweekly' = 'Quincenal',
-  'monthly' = 'Mensualmente',
-  // 'custom' = 'Personalizado',
-}
-
-export type TRecursiveDate = keyof typeof ERecursiveDate;
 
 export enum ETypeTitle {
   'viewer' = 'Ver',
@@ -219,4 +159,4 @@ export class AppendEntity {
   }
 }
 
-export type TModeFilter = 'local' | 'server'
+export type TModeFilter = 'local' | 'server';
