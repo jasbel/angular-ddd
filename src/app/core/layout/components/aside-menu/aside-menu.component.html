@@ -1,15 +1,23 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="12">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="24">
     <!-- <button mat-icon-button (click)="openView()">{{node.name}}</button> -->
-    <button mat-icon-button routerLink="{{node.link}}">{{node.name}}</button>
+    <button class="menu__button" mat-icon-button routerLink="{{ node.link }}">
+      <span>
+        <i class="{{ node.icon }}"></i>
+        {{ node.name }}
+      </span>
+    </button>
   </mat-tree-node>
 
-  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="12">
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="24">
+    <button class="menu__button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
       <mat-icon class="mat-icon-rtl-mirror">
-        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
       </mat-icon>
+      <span>
+        <i class="{{ node.icon }}"></i>
+        {{ node.name }}
+      </span>
     </button>
-    {{node.name}}
   </mat-tree-node>
 </mat-tree>

@@ -1,18 +1,31 @@
-import { User } from './user.interface';
+import { sId } from 'src/app/utils';
+import { IUser, IUserCreate, IUserUpdate, IUserInfo } from './user.interface';
 
-export class UserClass implements User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+export class UserInfoModel implements IUserInfo {
+  id: sId;
+  name: string;
+  password: string;
 
-  constructor(m?: User) {
-    this.id = m?.id || '';
-    this.firstName = m?.firstName || '';
-    this.lastName = m?.lastName || '';
-    this.email = m?.email || '';
+  constructor(m?: UserInfoModel) {
+    this.id = m?.id! || '';
+    this.name = m?.name || '';
+    this.password = m?.password || '';
   }
 }
+export class UserUpdateModel implements IUserUpdate {
+  name: string;
+  password: string;
 
-export class UserModel extends UserClass {}
-export class UserInfoModel extends UserClass {}
+  constructor(m?: UserUpdateModel) {
+    this.name = m?.name || '';
+    this.password = m?.password || '';
+  }
+}
+export class UserCreateModel extends UserUpdateModel implements IUserCreate {
+  id: sId;
+
+  constructor(m?: UserCreateModel) {
+    super(m);
+    this.id = m?.id! || '';
+  }
+}

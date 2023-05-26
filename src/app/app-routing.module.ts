@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/auth';
+// import { isAuthenticatedGuard, isNotAuthenticatedGuard } from './core/auth';
 // import { isNotAuthenticatedGuard, isAuthenticatedGuard } from './auth/guards';
 
 const routes: Routes = [
@@ -12,16 +12,15 @@ const routes: Routes = [
 
   {
     path: '',
-    // path: '',
-    canActivate: [isNotAuthenticatedGuard /* isAuthenticatedGuard */], // TODO:
+    canActivate: [/* isNotAuthenticatedGuard */ /* isAuthenticatedGuard */],
     loadChildren: () => import('./core/layout/layout.module').then((m) => m.LayoutModule),
   },
 
-  {
+ /*  {
     path: '**',
     // redirectTo: '',
     redirectTo: 'auth',
-  },
+  }, */
 ];
 
 @NgModule({

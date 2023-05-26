@@ -1,56 +1,76 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { v4 } from 'uuid';
+
+import { TTypeForm, sId } from 'src/app/utils';
+import { UserCreateModel, UserUpdateModel } from '../../models';
+import { UserService } from '../../services';
 
 @Component({
-  selector: 'app-user-form',
+  selector: 'user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css'],
+  styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
-  userForm = this.formBuilder.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
+  @Input({ required: true }) typeForm!: TTypeForm;
+
+  form = this.formBuilder.group({
+    id: [<sId>v4(), Validators.required],
+    name: ['', Validators.required],
+    password: ['', [Validators.required, Validators.email]],
+    cPassword: ['', [Validators.required, Validators.email]],
   });
+
   submitted = false;
 
-  constructor(
-    private formBuilder: NonNullableFormBuilder,
-    private userService: UserService
-  ) {}
-
-  ngOnInit() {
-    this.userForm;
+  get title() {
+    return 'Crear Cuenta';
   }
 
-  get formControls() {
-    return this.userForm.controls;
+  get f() {
+    return this.form.controls;
+  }
+
+  constructor(private formBuilder: NonNullableFormBuilder, private userService: UserService) {}
+
+  ngOnInit() {
+    this.form;
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if (this.userForm.invalid) {
-      return;
-    }
+    if (this.form.invalid) return;
 
-    const user = {
-      id: `${Math.random()}`,
-      firstName: this.formControls.firstName.value!,
-      lastName: this.formControls.lastName.value!,
-      email: this.formControls.email.value!,
-    };
+    if (this.typeForm === 'create') this.create();
+    if (this.typeForm === 'update') this.update();
+  }
 
-    this.userService.createUser(user).subscribe({
-      next: (response) => {
-        // Aquí puedes manejar la respuesta del servidor o realizar acciones adicionales después de crear el usuario
+  private create() {
+    const data = new UserCreateModel(this.form.getRawValue());
+
+    this.userService.create(data).subscribe({
+      next: (resp) => {
         console.log('Usuario creado con éxito');
-        this.userForm.reset();
+        this.form.reset();
         this.submitted = false;
       },
       error: (error) => {
-        // Aquí puedes manejar el error en caso de que la creación del usuario falle
+        console.error('Error al crear el usuario', error);
+      },
+    });
+  }
+
+  private update() {
+    const data = new UserUpdateModel(this.form.getRawValue());
+
+    this.userService.update(data, this.form.controls.id.value).subscribe({
+      next: (resp) => {
+        console.log('Usuario actualizado con éxito');
+        this.form.reset();
+        this.submitted = false;
+      },
+      error: (error) => {
         console.error('Error al crear el usuario', error);
       },
     });

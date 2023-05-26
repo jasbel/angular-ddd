@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "authApp": {
+    "alvicApp": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/auth-app",
+            "outputPath": "dist/alvic",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -61,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "authApp:build:production"
+              "browserTarget": "alvicApp:build:production"
             },
             "development": {
-              "browserTarget": "authApp:build:development"
+              "browserTarget": "alvicApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +72,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "authApp:build"
+            "browserTarget": "alvicApp:build"
           }
         },
         "test": {
@@ -97,11 +97,11 @@
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "authApp:serve"
+            "devServerTarget": "alvicApp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "authApp:serve:production"
+              "devServerTarget": "alvicApp:serve:production"
             }
           }
         },
@@ -115,27 +115,27 @@
         "ct": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "authApp:serve",
+            "devServerTarget": "alvicApp:serve",
             "watch": true,
             "headless": false,
             "testingType": "component"
           },
           "configurations": {
             "development": {
-              "devServerTarget": "authApp:serve:development"
+              "devServerTarget": "alvicApp:serve:development"
             }
           }
         },
         "e2e": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "authApp:serve",
+            "devServerTarget": "alvicApp:serve",
             "watch": true,
             "headless": false
           },
           "configurations": {
             "production": {
-              "devServerTarget": "authApp:serve:production"
+              "devServerTarget": "alvicApp:serve:production"
             }
           }
         }

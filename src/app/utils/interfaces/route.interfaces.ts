@@ -10,7 +10,7 @@ type RouteData = {
 };
 
 interface CustomRouteBase extends Route {
-  path?: INav,
+  path?: INav;
   data?: RouteData;
 }
 

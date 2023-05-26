@@ -6,7 +6,7 @@ import { UserAuthModel } from 'src/app/core/auth';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGenericService {
+export class AuthSingleGenericService {
   constructor(private local: LocalStorageService) {}
 
   get headers() {

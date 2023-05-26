@@ -21,7 +21,119 @@
   color: $text-gray;
 }
 
-/* Mover a global */
 .whitespace-nowrap {
   white-space: nowrap;
+}
+
+.violet-btn {
+  $size: 68px;
+  max-width: 228px;
+  min-height: $size;
+  line-height: $size;
+  background-color: $violet-color;
+  @media (max-width: 576px) {
+    $size: 34px;
+    max-width: 150px;
+    min-height: $size;
+    line-height: $size;
+  }
+}
+
+.btn-link {
+  position: relative;
+  transition: all 0.3s ease;
+  width: max-content;
+  @include fonts($font-family-raleway, 24px, $black-color, 700);
+  &::before {
+    position: absolute;
+    content: "";
+    background-color: $black-color;
+    bottom: 0;
+    height: 1.5px;
+    width: 100%;
+  }
+  &:hover {
+    color: $violet-color;
+    &::before {
+      background-color: $violet-color;
+    }
+  }
+  @media (max-width: 576px) {
+    font-size: 13px;
+  }
+}
+
+/* .container {
+  @include container(1160px, 130px, 130px);
+  @media (max-width: 1200px) {
+    padding: 0 120px;
+  }
+  @media (max-width: 992px) {
+    padding: 0 100px;
+  }
+  @media (max-width: 768px) {
+    padding: 0 80px;
+  }
+  @media (max-width: 576px) {
+    padding: 0 40px;
+  }
+} */
+
+.txt1 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.txt2 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333333;
+  text-transform: uppercase;
+}
+
+.bg1 {
+  background-color: #3b5998;
+}
+
+.bg2 {
+  background-color: #1da1f2;
+}
+
+.bg3 {
+  background-color: #ea4335;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-hov-white:hover {
+  color: white;
+}
+
+.text-up {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-middle {
+  vertical-align: middle;
 }

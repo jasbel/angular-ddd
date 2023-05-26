@@ -1,0 +1,174 @@
+/**
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+
+*,
+*::before,
+*::after {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: inherit;
+  // box-sizing: border-box;
+  // font-family: Poppins-Regular, Roboto, "Helvetica Neue", sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins-Regular, Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+a:focus {
+  outline: none !important;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #a64bf4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
+}
+
+p {
+  /* font-family: Poppins-Regular; */
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
+}
+
+ul,
+li {
+  margin: 0px;
+  list-style-type: none;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus,
+input:focus {
+  border-color: transparent !important;
+}
+
+button {
+  outline: none !important;
+  border: none;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+h5 {
+  @include fonts($font-family-averta, 30px, $white-color, 300);
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+h1 {
+  @include fonts($font-family-raleway, 127px, $white-color, 300);
+  @media (max-width: 768px) {
+    font-size: 80px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 60px;
+  }
+}
+
+p {
+  @include fonts($font-family-raleway, 18px, $black-color);
+  line-height: 36px;
+  &.italics {
+    @include fonts($font-family-raleway, 24px, $white-color, normal, italic);
+    line-height: normal;
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+    line-height: 28px;
+    &.italics {
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 576px) {
+    font-size: 10px;
+    line-height: 18px;
+    &.italics {
+      font-size: 15px;
+    }
+  }
+}
+
+h2 {
+  @include fonts($font-family-raleway, 99px, $black-color, 900);
+  @media (max-width: 576px) {
+    font-size: 50px;
+  }
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  @include fonts($font-family-raleway, 21px, $white-color, 600);
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+}
+
+h4 {
+  @include fonts($font-family-raleway, 30px, $white-color, 700);
+  @media (max-width: 576px) {
+    font-size: 15px;
+  }
+}
+
+h3 {
+  @include fonts($font-family-raleway, 31px, $black-color, 700);
+  @media (max-width: 576px) {
+    font-size: 16px;
+  }
+}
+
+h6 {
+  @include fonts($font-family-raleway, 12.22px, $silver-color, 900);
+  @media (max-width: 576px) {
+    font-size: 10px;
+  }
+}

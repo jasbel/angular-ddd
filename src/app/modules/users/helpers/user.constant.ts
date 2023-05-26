@@ -1,8 +1,8 @@
-import { User } from "../models";
+import { IUser } from '../models';
 
-export const UserES: { [key in keyof Required<User>]: string } = {
+export const UserES: { [key in keyof Required<IUser>]: string } = {
   id: 'Id',
-  firstName: "Nombre",
-  lastName: "Apellido",
-  email: "Email"
+  name: 'Nombre',
+  password: 'Password',
+  cPassword: 'Confirmar Password',
 };

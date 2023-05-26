@@ -15,8 +15,9 @@ import {
   TError400Msg,
   clearNullorEmptyorUndefined,
   getNotifyString,
+  sId,
 } from '..';
-import { AuthGenericService } from './auth-generic.service';
+import { AuthSingleGenericService } from './auth-generic.service';
 import { ToastService } from './toast/toast.service';
 import { ErrorGeneric } from '..';
 
@@ -33,7 +34,10 @@ const defaultConfig: IConfigGetAll = {
   providedIn: 'root',
 })
 export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
-  constructor(private http: HttpClient, private authGeneric: AuthGenericService, private toast: ToastService) {}
+  constructor(
+    private http: HttpClient,
+    private authGeneric: AuthSingleGenericService /* , private toast: ToastService */
+  ) {}
 
   findAll<T = TFind>(
     endpoint: string,
@@ -49,8 +53,8 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
     );
   }
 
-  findOne<T = TFind>(endpoint: string, itemId?: string, config?: IConfigGetAll): Observable<ApiResponseModel<T>> {
-    let uri = itemId ? `/${itemId}` : ``;
+  findOne<T = TFind>(endpoint: string, id?: sId, config?: IConfigGetAll): Observable<ApiResponseModel<T>> {
+    let uri = id ? `/${id}` : ``;
     return this.http.get<ApiResponseModel<T>>(`${API_URL}${endpoint}${uri}`, this.authGeneric.headers).pipe(
       tap({
         next: (_) => {},
@@ -71,7 +75,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
 
     return this.http.post<ApiResponseModel<TResp>>(`${API_URL}${endpoint}`, _data, this.authGeneric.headers).pipe(
       tap({
-        next: (resp) => !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode /* this.currentModel */),
+        next: (resp) => {
+          /* !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode); */
+        },
         error: (err: IError) => !_config?.hiddenError && this.processErrorTap(err),
       })
     );
@@ -91,16 +97,16 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
 
     return this.http.put<ApiResponseModel<TR>>(`${API_URL}${endpoint}${_id}`, _data, this.authGeneric.headers).pipe(
       tap({
-        next: (resp) => !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode),
+        next: (resp) => {/* !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode) */},
         error: (err: IError) => !_config?.hiddenError && this.processErrorTap(err),
       })
     );
   }
 
-  delete(endpoint: string, id: string): Observable<ApiResponseModel> {
+  delete(endpoint: string, id: sId): Observable<ApiResponseModel> {
     return this.http.delete<ApiResponseModel>(`${API_URL}${endpoint}/${id}`, this.authGeneric.headers).pipe(
       tap({
-        next: (resp) => this.toast.showByStatusModel(resp.statuscode),
+        next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
         error: (err: IError) => this.processErrorTap(err),
       })
     );
@@ -180,13 +186,13 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => this.toast.showByStatusModel(resp.statuscode /* this.currentModel */),
+          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
           error: (err: IError) => this.processErrorTap(err),
         })
       );
   }
 
-  activeDeactive(endpoint: string, itemId: string, status: boolean): Observable<ApiResponseModel> {
+  actived(endpoint: string, itemId: string, status: boolean): Observable<ApiResponseModel> {
     return this.http
       .put<ApiResponseModel>(
         `${API_URL}${endpoint}/active/${itemId}`,
@@ -195,7 +201,7 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => this.toast.showByStatusModel(resp.statuscode /* this.currentModel */),
+          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
           error: (err: IError) => this.processErrorTap(err),
         })
       );
@@ -210,7 +216,7 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => this.toast.showByStatusModel(resp.statuscode /* this.currentModel */),
+          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
           error: (err: IError) => this.processErrorTap(err),
         })
       );
@@ -233,18 +239,18 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
     // if (Array.isArray(dataError.data) && dataError.data?.length) return;
 
     const notify = getNotifyString(dataError, modelES as TModelES<MT>);
-    notify && this.toast.showDangerServer(notify);
+    /* notify && this.toast.showDangerServer(notify); */
   }
 
   private processError400(msgs: TError400Msg[]) {
     (msgs || []).forEach(
-      (m) => EError400Msg[m] && this.toast.showDanger(EError400Msg[m] /* || EError400Msg['default'] */)
+      (m) => {/* EError400Msg[m] && this.toast.showDanger(EError400Msg[m]) */}
     );
   }
 
   private processError401() {
     /* // TODO: actualmente lo redirecciona al principio si no esta autorizado, lo eh comentado */
-    this.toast.showDanger('No Autorizado');
+    /* this.toast.showDanger('No Autorizado'); */
     // this.auth.logout();
     // document.location.reload();
   }

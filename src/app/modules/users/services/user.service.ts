@@ -1,36 +1,78 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { User } from '../models';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, finalize, map } from 'rxjs/operators';
+import { IUserCreate, IUserInfo, IUserUpdate } from '../models';
+import { UserApiService } from './user-api.service';
+import { UserES } from '../helpers';
+import { CommonServerService, IError, StatusCode, getNotifyString, sId } from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
-  private apiUrl = 'https://api.example.com/users'; // URL de la API de usuarios
+export class UserService extends CommonServerService {
+  isLoading$: Observable<boolean>;
+  isLoadingSubject: BehaviorSubject<boolean>;
 
-  constructor(private http: HttpClient) {}
-
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+  constructor(private userApiService: UserApiService) {
+    super();
+    this.isLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  getUser(id: number): Observable<User> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<User>(url);
+  findAll(queryString?: string): Observable<IUserInfo[] | undefined> {
+    this.isLoadingSubject.next(true);
+
+    return this.userApiService.findAll(queryString).pipe(
+      map((resp) => (resp ? resp.data : [])),
+      catchError((err) => this.processError(err)),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+  findOne(id: sId): Observable<IUserInfo | undefined> {
+    this.isLoadingSubject.next(true);
+
+    return this.userApiService.findOne(id).pipe(
+      map((resp) => {
+        this.notify = getNotifyString(resp);
+        return resp.data[0];
+      }),
+      catchError((err: IError<IUserInfo>) => this.processError(err, UserES)),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 
-  updateUser(user: User): Observable<User> {
-    const url = `${this.apiUrl}/${user.id}`;
-    return this.http.put<User>(url, user);
+  create(data: IUserCreate): Observable<true | undefined> {
+    this.isLoadingSubject.next(true);
+
+    return this.userApiService.create(data).pipe(
+      map((resp) => this.processOK(resp, StatusCode.created)),
+      catchError((err: IError<IUserCreate>) => this.processError(err, UserES)),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 
-  deleteUser(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+  update(data: IUserUpdate, dataId: string): Observable<true | undefined> {
+    this.isLoadingSubject.next(true);
+
+    return this.userApiService.update(data, dataId).pipe(
+      map((resp) => this.processOK(resp, StatusCode.updated)),
+      catchError((err: IError<IUserUpdate>) => this.processError(err, UserES)),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  delete(id: sId): Observable<true | undefined> {
+    return this.userApiService.delete(id).pipe(
+      map((resp) => this.processOK(resp, StatusCode.deleted)),
+      catchError((err: IError) => this.processError(err))
+    );
+  }
+
+  activeDeactive(id: string, active: boolean): Observable<true | undefined> {
+    return this.userApiService.actived(id, active).pipe(
+      map((res) => this.processOK(res, StatusCode.updated)),
+      catchError((err: IError) => this.processError(err))
+    );
   }
 }

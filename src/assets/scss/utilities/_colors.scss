@@ -1,0 +1,38 @@
+@function color($color) {
+  @return var(--bs-#{$color});
+}
+
+// @function btn-bg-color($color) {
+//   @return var(--bs-#{$color});
+// }
+
+/* Paleta de colores, mover a donde corresponde */
+$color-white: #fff;
+$color-silver: #e5e6ed;
+$color-black: #000;
+$color-dark: #333;
+$color-gray: #9196a7; // --bs-light : #9096a9;
+
+
+$color-primary: color(primary);
+$color-secondary: color(secondary);
+/* #36a698 */
+$color-secondary-silver: #a8c6c3;
+$color-secondary-light: #ddf3f1;
+$color-secondary-border: #aec5c3;
+
+$light-active: #abb1c7 !default; // Custom variable
+
+$bg-white: #fff;
+$bg-answer: #f3f4f9;
+$bg-secondary-light: #ddf3f1;
+
+/* Font-color */
+$text-gray: #6a7082; //  #687084
+$text-darkblue: #1d305f;
+
+/* picker custom */
+$color-blue-opacity-picker: rgba(2, 117, 216, 0.5);
+$color-blue-picker: rgb(2, 117, 216);
+$color-blue-dark-picker: rgba(2, 117, 216, 0.5);
+$color-blue-darken-picker: #1e3060;

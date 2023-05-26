@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import { CustomRoutes } from 'src/app/utils';
 
-const routes: Routes = [
+const routes: Routes & CustomRoutes = [
   {
     path: '',
     component: LayoutComponent,
@@ -10,18 +11,19 @@ const routes: Routes = [
       {
         path: 'dashboard',
         canActivate: [],
-        loadChildren: () =>
-          import('../../modules/dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
+        loadChildren: () => import('../../modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: 'users',
         canActivate: [],
-        loadChildren: () =>
-          import('../../modules/users/users.module').then((m) => m.UsersModule),
+        loadChildren: () => import('../../modules/users/users.module').then((m) => m.UsersModule),
       },
-      { path: '**', redirectTo: 'dashboard' },
+      {
+        path: 'collections',
+        canActivate: [],
+        loadChildren: () => import('../../modules/users/users.module').then((m) => m.UsersModule),
+      },
+      { path: '**', redirectTo: 'users' },
     ],
   },
 ];
