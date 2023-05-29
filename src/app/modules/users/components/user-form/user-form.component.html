@@ -1,19 +1,38 @@
-<form class="form" autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <form-title> {{title}} </form-title>
+<mat-card class="form__wrap">
+  <mat-card-content>
+    <form class="form" autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form-title> {{ title }} </form-title>
 
-  <input-control label="Correo">
-    <input class="form__input" type="email" formControlName="email" placeholder="Correo electrónico" />
-  </input-control>
+      <input-control label="{{ dataEs.name }}">
+        <input class="form__input" type="name" formControlName="name" placeholder="Ingrese {{ dataEs.name }}" />
+      </input-control>
 
-  <input-control label="contraseña">
-    <input class="form__input" type="password" formControlName="password" placeholder="Ingrese su contraseña" />
-  </input-control>
+      <input-control label="{{ dataEs.password }}">
+        <input
+          class="form__input"
+          type="password"
+          formControlName="password"
+          placeholder="Ingrese su {{ dataEs.password }}"
+        />
+      </input-control>
 
-  <input-control label="Repita su contraseña">
-    <input class="form__input" type="password" formControlName="cPassword" placeholder="Repita su contraseña" />
-  </input-control>
+      <input-control label="Repita su {{ dataEs.password }}">
+        <input
+          class="form__input"
+          type="password"
+          formControlName="cPassword"
+          placeholder="Repita su {{ dataEs.password }}"
+        />
+      </input-control>
 
-  <submit-control>
-    <button class="form__btn" [disabled]="form.invalid" type="submit">Guardar</button>
-  </submit-control>
-</form>
+      <div class="btn__wrap">
+        <submit-control>
+          <button class="form__btn" [disabled]="form.invalid" type="submit">Guardar</button>
+        </submit-control>
+        <submit-control>
+          <button class="form__btn" type="button" (click)="onReturn()">Volver</button>
+        </submit-control>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

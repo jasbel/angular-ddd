@@ -1,23 +1,35 @@
-export interface AuthUser {
+export interface IAuthUser {
   id: number;
   password: string;
   cPassword: string;
-  email: string;
+  name: string;
+}
+export interface IAuthUser {
+  id: number;
+  password: string;
+  cPassword: string;
+  name: string;
 }
 
-export class AuthUserClass implements AuthUser {
+export class AuthUserModel implements IAuthUser {
   id: number;
   password: string;
   cPassword: string;
-  email: string;
+  name: string;
 
-  constructor(m?: AuthUser) {
+  constructor(m?: IAuthUser) {
     this.id = m?.id || 0;
     this.password = m?.password || '';
     this.cPassword = m?.cPassword || '';
-    this.email = m?.email || '';
+    this.name = m?.name || '';
   }
 }
+export class LoginModel implements Pick<IAuthUser, 'name' | 'password'> {
+  password: string;
+  name: string;
 
-export class AuthUserModel extends AuthUserClass {}
-export class AuthUserInfoModel extends AuthUserClass {}
+  constructor(m?: IAuthUser) {
+    this.password = m?.password || '';
+    this.name = m?.name || '';
+  }
+}

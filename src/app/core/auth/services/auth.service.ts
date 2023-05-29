@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/utils/services';
 import { ApiResponseModel } from 'src/app/utils';
 import { environment } from 'src/environments/environments';
-import { AuthHTTPService } from './auth-http';
-import { AuthUser, UserAuthModel } from '../models';
-import { AuthStatus, CheckTokenResponse, LoginResponse, IUser } from '../interfaces';
+import { AuthApiService } from './auth-api';
+import { IAuthUser, LoginModel, UserAuthModel } from '../models';
+import { AuthStatus, CheckTokenResponse, LoginResponse, IUser } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class AuthService {
     return this._currentUser();
   }
 
-  constructor(private authHttpService: AuthHTTPService, private router: Router, private local: LocalStorageService) {
+  constructor(private authHttpService: AuthApiService, private router: Router, private local: LocalStorageService) {
     this.checkAuthStatus().subscribe();
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
@@ -45,12 +45,9 @@ export class AuthService {
     return true;
   }
 
-  login(email: string, password: string): Observable<boolean> {
-    const url = `${this.baseUrl}/auth/login`;
-    const body = { email, password };
-
+  login(data: LoginModel): Observable<boolean> {
     this.isLoadingSubject.next(true);
-    return this.http.post<LoginResponse>(url, body).pipe(
+    return this.authHttpService.login(data).pipe(
       map(({ user, token }) => this.setAuthentication(user, token)),
       catchError((err) => throwError(() => err.error.message)),
       finalize(() => this.isLoadingSubject.next(false))
@@ -86,10 +83,10 @@ export class AuthService {
     this.router.navigate(['/auth/login'], { queryParams: {} });
   }
 
-  registration(user: AuthUser): Observable<boolean | null> {
+  registration(data: IAuthUser): Observable<boolean | null> {
     this.isLoadingSubject.next(true);
-    return this.authHttpService.createUser(user).pipe(
-      switchMap(() => this.login(user.email, user.password)),
+    return this.authHttpService.createUser(data).pipe(
+      switchMap(() => this.login({ name: data.name, password: data.password })),
       catchError((err) => of(null)),
       finalize(() => this.isLoadingSubject.next(false))
     );

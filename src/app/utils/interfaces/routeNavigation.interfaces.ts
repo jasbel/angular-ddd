@@ -23,5 +23,3 @@ export type TRoutePattern =
   | `/users/create`
   | `/users/list`
   | `/users/${sId}`;
-
-export type IRoute = `/${TPath}/${TActionPath}`;

@@ -111,10 +111,10 @@ export type TModulePermission = `${sModuleName}_${TActionPermission}`;
 export type IPermissionActions = { [key in sModuleName]: TActionPermission[] };
 
 export enum ETypeTitle {
-  'viewer' = 'Ver',
-  'list' = 'Listado',
-  'create' = 'Crear',
-  'update' = 'Actualizar',
+  viewer = 'Ver',
+  list = 'Listado',
+  create = 'Crear',
+  update = 'Actualizar',
 }
 export type TTypeTitle = keyof typeof ETypeTitle;
 

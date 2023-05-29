@@ -7,11 +7,9 @@ import { Component } from '@angular/core';
       .auth__card-content {
         @apply flex flex-wrap items-center justify-center w-full min-h-screen p-5 bg-center bg-no-repeat bg-cover;
 
-        background: linear-gradient(
-          90deg,
-          rgba(91, 192, 234, 1) 0%,
-          rgb(83, 0, 217) 92%
-        );
+        flex-direction: column;
+        background: linear-gradient(90deg, rgba(91, 192, 234, 1) 0%, rgb(83, 0, 217) 92%);
+        gap: 12px;
       }
       .auth__card {
         @apply rounded-3xl w-full;

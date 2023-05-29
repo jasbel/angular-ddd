@@ -1,5 +1,6 @@
 export enum EEndpoint {
+  auth = '/auth',
   collection = '/collections',
-  user = '/collections',
+  user = '/users',
   dashboard = '/collections',
 }

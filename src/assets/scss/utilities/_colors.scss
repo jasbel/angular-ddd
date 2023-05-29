@@ -2,6 +2,35 @@
   @return var(--bs-#{$color});
 }
 
+// Primary
+$primary: if(isDarkMode(), #3699ff, #3f68d0);
+$primary-active: if(isDarkMode(), #187de4, #7d9ef3);
+$primary-light: if(isDarkMode(), #212e48, #f1faff);
+$primary-inverse: #ffffff;
+
+// Success
+$success: if(isDarkMode(), #0bb783, #50cd89);
+$success-active: if(isDarkMode(), #04aa77, #47be7d);
+$success-light: if(isDarkMode(), #1c3238, #e8fff3);
+$success-inverse: #ffffff;
+
+// Info
+$info: if(isDarkMode(), #8950fc, #7239ea);
+$info-active: if(isDarkMode(), #7337ee, #5014d0);
+$info-light: if(isDarkMode(), #2f264f, #f8f5ff);
+$info-inverse: #ffffff;
+
+// Danger
+$danger: if(isDarkMode(), #f64e60, #f1416c);
+$danger-active: if(isDarkMode(), #ee2d41, #d9214e);
+$danger-light: if(isDarkMode(), #3a2434, #fff5f8);
+$danger-inverse: #ffffff;
+
+// Warning
+$warning: if(isDarkMode(), #ffa800, #ffc700);
+$warning-active: if(isDarkMode(), #ee9d01, #f1bc00);
+$warning-light: if(isDarkMode(), #392f28, #fff8dd);
+
 // @function btn-bg-color($color) {
 //   @return var(--bs-#{$color});
 // }
@@ -12,7 +41,6 @@ $color-silver: #e5e6ed;
 $color-black: #000;
 $color-dark: #333;
 $color-gray: #9196a7; // --bs-light : #9096a9;
-
 
 $color-primary: color(primary);
 $color-secondary: color(secondary);
@@ -36,3 +64,66 @@ $color-blue-opacity-picker: rgba(2, 117, 216, 0.5);
 $color-blue-picker: rgb(2, 117, 216);
 $color-blue-dark-picker: rgba(2, 117, 216, 0.5);
 $color-blue-darken-picker: #1e3060;
+
+/*  */
+
+//
+// Global variables for Bootstrap customization.
+// To override any Bootstrap variable safely you can use _variables.demo.scss
+//
+
+// Bootstrap base colors
+$white: #ffffff !default;
+$black: #000000 !default;
+$gray-100: if(isDarkMode(), #1b1b29, #f3f4f9) !default;
+$gray-200: if(isDarkMode(), #2b2b40, #f3f4f9) !default;
+$gray-300: if(isDarkMode(), #323248, #cfd2e0) !default;
+$gray-400: if(isDarkMode(), #474761, #b5b5c3) !default;
+$gray-500: if(isDarkMode(), #565674, #a1a5b7) !default;
+$gray-600: if(isDarkMode(), #6d6d80, #6a7082) !default;
+$gray-700: if(isDarkMode(), #92929f, #5e6278) !default;
+$gray-800: if(isDarkMode(), #cdcdde, #3f4254) !default;
+$gray-900: if(isDarkMode(), #ffffff, #1d305f) !default;
+$text-muted: $gray-500 !default;
+
+// Bootstrap gray colors map
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+) !default; // Custom variable
+
+// Bootstrap custom colors
+$dark: #555555 !default;
+$blue: #009ef6 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #d63384 !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #198754 !default;
+$teal: #20c997 !default;
+$cyan: #0dcaf0 !default;
+
+// Bootstrap colors map
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "gray": $gray-600,
+  "gray-dark": $gray-800,
+) !default;

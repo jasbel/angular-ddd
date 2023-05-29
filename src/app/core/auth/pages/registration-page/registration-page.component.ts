@@ -14,7 +14,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
   form = this.fb.group(
     {
       id: [Math.random() * 1000],
-      email: [
+      name: [
         '',
         [
           Validators.required,

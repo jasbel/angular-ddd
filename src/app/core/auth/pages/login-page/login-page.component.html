@@ -1,19 +1,21 @@
-<logo type="in-auth"></logo>
-
 <form class="form" autocomplete="off" [formGroup]="form" (ngSubmit)="login()">
   <form-title> Login </form-title>
 
-  <input-control label="Correo">
-    <input class="form__input" type="email" formControlName="email" placeholder="Correo electrónico" />
+  <input-control label="{{ authEs.name }}">
+    <input class="form__input" type="name" formControlName="name" placeholder="{{ authEs.name }}" />
   </input-control>
 
-  <input-control label="Contraseña">
-    <input class="form__input" type="password" formControlName="password" placeholder="Ingrese su contraseña" />
+  <input-control label="{{ authEs.password }}">
+    <input
+      class="form__input"
+      type="password"
+      formControlName="password"
+      placeholder="Ingrese su {{ authEs.password }}"
+    />
   </input-control>
-
 
   <submit-control>
-    <button class="form__btn" [disabled]="form.invalid" type="submit"> Login </button>
+    <button class="form__btn" [disabled]="form.invalid" type="submit">Ingresar</button>
   </submit-control>
 
   <div class="flex flex-col items-center pt-10">

@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { IModelSingle, sDate, sFilter } from 'src/app/utils';
-import { isProduction } from 'src/app/utils/config';
+import { IModelSingle, isDev, sDate, sFilter } from 'src/app/utils';
 
 export type sFilterChart = sFilter | string[];
 export type TTypeInputFilter = 'multicomplete' | 'text' | 'date' | 'datetime' | 'checkbox';
@@ -80,7 +79,7 @@ export class FilterComponent<I> implements OnInit {
     this.filters.forEach((f, idx) => {
       this.formItems.push(this.buildFilter(f));
 
-      if (!isProduction && f.type === 'multicomplete') this.addSelect({ id: 'fulanitoid', name: 'fulanito' }, idx);
+      if (isDev && f.type === 'multicomplete') this.addSelect({ id: 'fulanitoid', name: 'fulanito' }, idx);
     });
   }
 

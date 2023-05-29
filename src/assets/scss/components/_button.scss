@@ -1,3 +1,141 @@
-// -----------------------------------------------------------------------------
-// This file contains all styles related to the button component.
-// -----------------------------------------------------------------------------
+.btn {
+  @include mq("border-radius", "200px", $xl);
+  opacity: 0.9;
+
+  &:focus {
+    @extend %btn-focus;
+  }
+
+  &:focus,
+  &:hover {
+    opacity: 1;
+  }
+
+  &__wrap-table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+
+    & .btn {
+      white-space: nowrap;
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 46px;
+    gap: 8px;
+
+    @include mqi(flex-col, $sm);
+
+    > * {
+      margin-left: 12px;
+      margin-right: 12px;
+      max-width: 250px;
+      width: 100%;
+      flex: 1;
+
+      @include mqi(min-w-auto, $md);
+      @include mqi(flex-1, $md);
+
+      @include mqi(mr-0, $sm);
+      @include mqi(ml-0, $sm);
+
+      @include mq(max-width, none, $sm);
+    }
+
+    > *:first-child {
+      margin-left: 0;
+    }
+    > *:last-child {
+      margin-right: 0;
+    }
+
+    &--w-auto {
+      min-width: auto;
+      flex: auto;
+    }
+    &--reverse {
+      @extend .btn__wrap;
+      flex-direction: row-reverse;
+
+      > *:first-child {
+        margin-right: 0;
+      }
+      > *:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__wrap--medium {
+    @extend .btn__wrap;
+    max-width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &--clear {
+    border: none;
+  }
+
+  &--danger {
+    background-color: $red !important;
+    color: white;
+    &:focus,
+    &:hover {
+      background-color: $red !important;
+      color: white;
+    }
+  }
+
+  &--success {
+    background-color: $green !important;
+    color: white;
+    &:focus,
+    &:hover {
+      background-color: $green !important;
+      color: white;
+    }
+  }
+
+  &--dark {
+    background-color: $dark;
+    color: $primary-inverse;
+
+    &:focus,
+    &:hover {
+      background-color: $dark !important;
+      color: $primary-inverse;
+    }
+  }
+  &--primary {
+    background-color: $primary-active;
+    color: $primary-inverse;
+
+    &:focus,
+    &:hover {
+      background-color: $primary-active !important;
+      color: $primary-inverse;
+    }
+  }
+
+  &--responsive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  &--clear {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+
+  i {
+    color: inherit;
+  }
+}

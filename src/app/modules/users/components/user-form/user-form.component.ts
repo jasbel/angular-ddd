@@ -2,9 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { v4 } from 'uuid';
 
-import { TTypeForm, sId } from 'src/app/utils';
+import { ETypeTitle, TRoutePattern, TTypeForm, sId } from 'src/app/utils';
 import { UserCreateModel, UserUpdateModel } from '../../models';
 import { UserService } from '../../services';
+import { UserES } from '../../helpers';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'user-form',
@@ -21,20 +24,37 @@ export class UserFormComponent implements OnInit {
     cPassword: ['', [Validators.required, Validators.email]],
   });
 
+  dataEs = UserES;
+
   submitted = false;
 
+  itemId: sId | null = null;
+
   get title() {
-    return 'Crear Cuenta';
+    return ETypeTitle[this.typeForm] + ' Usuario';
   }
 
   get f() {
     return this.form.controls;
   }
 
-  constructor(private formBuilder: NonNullableFormBuilder, private userService: UserService) {}
+  constructor(
+    private formBuilder: NonNullableFormBuilder,
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.form;
+    if (this.typeForm === 'update') this.findOne();
+  }
+
+  private findOne() {
+    this.itemId = (this.route.snapshot.paramMap.get('id') || '') as sId;
+
+    if (!this.itemId) return;
+
+    this.userService.findOne(this.itemId).subscribe((resp) => !!resp && this.form.patchValue({ ...resp }));
   }
 
   onSubmit() {
@@ -75,4 +95,9 @@ export class UserFormComponent implements OnInit {
       },
     });
   }
+
+  onReturn = () => {
+    const _link: TRoutePattern = '/users/list';
+    this.router.navigate([_link]);
+  };
 }

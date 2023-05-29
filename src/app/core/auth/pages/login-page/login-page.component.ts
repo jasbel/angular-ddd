@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '../../services/auth.service';
+import { TRoutePattern } from 'src/app/utils';
+import { AuthES } from '../../helpers';
 
 @Component({
   templateUrl: './login-page.component.html',
@@ -14,17 +16,19 @@ export class LoginPageComponent {
   private router = inject(Router);
 
   form: FormGroup = this.fb.group({
-    email: ['info@alvic.com', [Validators.required, Validators.email]],
+    name: ['admin@29', [Validators.required, Validators.email]],
     password: ['12345678', [Validators.required, Validators.minLength(6)]],
   });
 
-  login() {
-    const { email, password } = this.form.value;
+  authEs = AuthES;
 
-    this.authService.login(email, password).subscribe({
-      next: () => this.router.navigateByUrl('/dashboard'),
-      error: (message) => {
-        Swal.fire('Error', message, 'error');
+  login() {
+    const { name, password } = this.form.getRawValue();
+
+    this.authService.login({ name, password }).subscribe({
+      next: () => this.router.navigateByUrl(<TRoutePattern>'/users'),
+      error: (err) => {
+        Swal.fire('Error', err, 'error');
       },
     });
   }
