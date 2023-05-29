@@ -1,13 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
+import { LocalService } from './local-storage.service';
 import { UserAuthModel } from 'src/app/core/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthSingleGenericService {
-  constructor(private local: LocalStorageService) {}
+  constructor(private local: LocalService) {}
 
   get headers() {
     let httpHeaders = new HttpHeaders({

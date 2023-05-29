@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPermissionActions, TRole, sModuleName, TActionPermission } from 'src/app/utils';
 import { ModulesOfMgrCenter, ModulesOfMgrGroup, ModulesOfSuperAdmin } from '../helpers/auth-role.constant';
-import { LocalStorageService } from 'src/app/utils';
+import { LocalService } from 'src/app/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ import { LocalStorageService } from 'src/app/utils';
 export class AuthRoleService {
   actionPermissions: TActionPermission[] = [];
 
-  constructor(private local: LocalStorageService) {
+  constructor(private local: LocalService) {
     this.actionPermissions = [];
   }
 

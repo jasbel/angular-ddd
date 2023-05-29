@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { v4 } from 'uuid';
@@ -7,7 +8,7 @@ import { UserCreateModel, UserUpdateModel } from '../../models';
 import { UserService } from '../../services';
 import { UserES } from '../../helpers';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'user-form',
@@ -20,13 +21,13 @@ export class UserFormComponent implements OnInit {
   form = this.formBuilder.group({
     id: [<sId>v4(), Validators.required],
     name: ['', Validators.required],
-    password: ['', [Validators.required, Validators.email]],
-    cPassword: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
+    cPassword: ['', [Validators.required]],
   });
 
-  dataEs = UserES;
+  load$ = new BehaviorSubject<boolean>(false);
 
-  submitted = false;
+  dataEs = UserES;
 
   itemId: sId | null = null;
 
@@ -42,8 +43,11 @@ export class UserFormComponent implements OnInit {
     private formBuilder: NonNullableFormBuilder,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private toastr: ToastrService // private toast: ToastService
+  ) {
+    this.load$ = this.userService.isLoadingSubject;
+  }
 
   ngOnInit() {
     if (this.typeForm === 'update') this.findOne();
@@ -54,13 +58,14 @@ export class UserFormComponent implements OnInit {
 
     if (!this.itemId) return;
 
-    this.userService.findOne(this.itemId).subscribe((resp) => !!resp && this.form.patchValue({ ...resp }));
+    this.userService
+      .findOne(this.itemId)
+      .subscribe((resp) => !!resp && this.form.patchValue({ ...resp, cPassword: resp.password }));
   }
 
   onSubmit() {
-    this.submitted = true;
-
     if (this.form.invalid) return;
+    if (!this.validPassword()) return;
 
     if (this.typeForm === 'create') this.create();
     if (this.typeForm === 'update') this.update();
@@ -70,14 +75,8 @@ export class UserFormComponent implements OnInit {
     const data = new UserCreateModel(this.form.getRawValue());
 
     this.userService.create(data).subscribe({
-      next: (resp) => {
-        console.log('Usuario creado con éxito');
-        this.form.reset();
-        this.submitted = false;
-      },
-      error: (error) => {
-        console.error('Error al crear el usuario', error);
-      },
+      next: (resp) => resp && this.onReturn(),
+      complete: () => {},
     });
   }
 
@@ -85,15 +84,20 @@ export class UserFormComponent implements OnInit {
     const data = new UserUpdateModel(this.form.getRawValue());
 
     this.userService.update(data, this.form.controls.id.value).subscribe({
-      next: (resp) => {
-        console.log('Usuario actualizado con éxito');
-        this.form.reset();
-        this.submitted = false;
-      },
-      error: (error) => {
-        console.error('Error al crear el usuario', error);
-      },
+      next: (resp) => resp && this.onReturn(),
+      complete: () => {},
     });
+  }
+
+  private validPassword() {
+    const { cPassword, password } = this.form.getRawValue();
+
+    let msg = '';
+    if (password !== cPassword) msg = 'Password no coinciden';
+
+    if (msg) this.toastr.error('Warning!', msg);
+
+    return !msg;
   }
 
   onReturn = () => {

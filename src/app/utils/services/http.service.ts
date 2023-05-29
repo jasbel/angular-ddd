@@ -7,7 +7,6 @@ import {
   API_URL,
   ApiResponseEnumModel,
   ApiResponseModel,
-  EError400Msg,
   EErrorMsgCore,
   IConfigGetAll,
   IDataGeneric,
@@ -18,7 +17,6 @@ import {
   sId,
 } from '..';
 import { AuthSingleGenericService } from './auth-generic.service';
-import { ToastService } from './toast/toast.service';
 import { ErrorGeneric } from '..';
 
 type TModelES<T> = { [key in keyof T]: string };
@@ -88,7 +86,8 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
     data: T & { id?: string },
     config?: IConfigGetAll
   ): Observable<ApiResponseModel<TR>> {
-    const _id = data?.id || config?.id || '';
+    const id = data?.id || config?.id;
+    const _id = id ? `/${id}` : '';
 
     const _config = { ...defaultConfig, ...config };
 
@@ -97,7 +96,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
 
     return this.http.put<ApiResponseModel<TR>>(`${API_URL}${endpoint}${_id}`, _data, this.authGeneric.headers).pipe(
       tap({
-        next: (resp) => {/* !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode) */},
+        next: (resp) => {
+          /* !_config?.hiddenToast && this.toast.showByStatusModel(resp.statuscode) */
+        },
         error: (err: IError) => !_config?.hiddenError && this.processErrorTap(err),
       })
     );
@@ -106,7 +107,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
   delete(endpoint: string, id: sId): Observable<ApiResponseModel> {
     return this.http.delete<ApiResponseModel>(`${API_URL}${endpoint}/${id}`, this.authGeneric.headers).pipe(
       tap({
-        next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
+        next: (resp) => {
+          /* this.toast.showByStatusModel(resp.statuscode) */
+        },
         error: (err: IError) => this.processErrorTap(err),
       })
     );
@@ -186,7 +189,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
+          next: (resp) => {
+            /* this.toast.showByStatusModel(resp.statuscode) */
+          },
           error: (err: IError) => this.processErrorTap(err),
         })
       );
@@ -201,7 +206,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
+          next: (resp) => {
+            /* this.toast.showByStatusModel(resp.statuscode) */
+          },
           error: (err: IError) => this.processErrorTap(err),
         })
       );
@@ -216,7 +223,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
       )
       .pipe(
         tap({
-          next: (resp) => {/* this.toast.showByStatusModel(resp.statuscode) */},
+          next: (resp) => {
+            /* this.toast.showByStatusModel(resp.statuscode) */
+          },
           error: (err: IError) => this.processErrorTap(err),
         })
       );
@@ -243,9 +252,9 @@ export class HttpService<TFind, TCreate = TFind, TEdit = TCreate> {
   }
 
   private processError400(msgs: TError400Msg[]) {
-    (msgs || []).forEach(
-      (m) => {/* EError400Msg[m] && this.toast.showDanger(EError400Msg[m]) */}
-    );
+    (msgs || []).forEach((m) => {
+      /* EError400Msg[m] && this.toast.showDanger(EError400Msg[m]) */
+    });
   }
 
   private processError401() {

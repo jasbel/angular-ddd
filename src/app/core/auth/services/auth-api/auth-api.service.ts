@@ -15,16 +15,11 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) {}
 
-  login(data: LoginModel): Observable<LoginResponse> {
-    // let form = new FormData();
-    // form.append('username', email);
-    // form.append('password', password);
-    // return this.http.post<AuthUserModel>(`${this.endpoint}/login`, form).pipe(first());
-
+  login(data: LoginModel): Observable<ApiResponseModel<LoginResponse>> {
     const url = `${this.endpoint}/login`;
     const body = data;
 
-    return this.http.post<LoginResponse>(url, body).pipe(first());
+    return this.http.post<ApiResponseModel<LoginResponse>>(url, body).pipe(first());
   }
 
   createUser(user: AuthUserModel): Observable<AuthUserModel> {

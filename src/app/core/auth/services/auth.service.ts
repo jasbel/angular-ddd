@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, finalize, map, of, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { LocalStorageService } from 'src/app/utils/services';
+import { LocalService } from 'src/app/utils/services';
 import { ApiResponseModel } from 'src/app/utils';
 import { environment } from 'src/environments/environments';
 import { AuthApiService } from './auth-api';
-import { IAuthUser, LoginModel, UserAuthModel } from '../models';
-import { AuthStatus, CheckTokenResponse, LoginResponse, IUser } from '../models';
+import { IAuthUser, IUserLogin, LoginModel, UserAuthModel } from '../models';
+import { AuthStatus, CheckTokenResponse } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -23,55 +23,66 @@ export class AuthService {
   private readonly baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
 
-  private _currentUser = signal<IUser | null>(null);
+  private _currentUser = signal<IUserLogin | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
 
   get currentUserValue() {
     return this._currentUser();
   }
 
-  constructor(private authHttpService: AuthApiService, private router: Router, private local: LocalStorageService) {
+  constructor(private authHttpService: AuthApiService, private router: Router, private local: LocalService) {
     this.checkAuthStatus().subscribe();
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  private setAuthentication(user: IUser, token: string): boolean {
+  private setAuthentication(user: IUserLogin, token: string): boolean {
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
-    localStorage.setItem('token', token);
+
+    this.local.setItem('token', token);
+    this.local.setItem('userLogin', user);
 
     return true;
   }
 
-  login(data: LoginModel): Observable<boolean> {
+  login(_data: LoginModel): Observable<boolean> {
     this.isLoadingSubject.next(true);
-    return this.authHttpService.login(data).pipe(
-      map(({ user, token }) => this.setAuthentication(user, token)),
+    return this.authHttpService.login(_data).pipe(
+      map((res) => {
+        const { data } = res;
+        const { id, name } = data[0];
+        return this.setAuthentication({ id, name }, data[0].token);
+      }),
       catchError((err) => throwError(() => err.error.message)),
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
   checkAuthStatus(): Observable<boolean> {
-    const url = `${this.baseUrl}/auth/check-token`;
-    const token = localStorage.getItem('token');
+    // const url = `${this.baseUrl}/auth/check-token`;
+    const token = this.local.getItem<string>('token');
+    const user = this.local.getItem<IUserLogin>('userLogin');
 
-    if (!token) {
+    if (!token || !user) {
       this.logout();
       return of(false);
     }
 
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return of(this.setAuthentication(user, token));
+
+    /*  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http.get<CheckTokenResponse>(url, { headers }).pipe(
-      map(({ user, token }) => this.setAuthentication(user, token)),
+      map(({ user, token }) => {
+        return this.setAuthentication(user, token);
+      }),
       catchError(() => {
         this._authStatus.set(AuthStatus.notAuthenticated);
         return of(false);
       })
-    );
+    ); */
   }
 
   logout() {

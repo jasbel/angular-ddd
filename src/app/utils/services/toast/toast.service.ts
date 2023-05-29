@@ -16,12 +16,12 @@ interface IOption extends Pick<IToast, 'classname' | 'delay' | 'title' | 'isErro
 export class ToastService {
   private toasts: IToast[] = [];
 
-  constructor(private toastr: ToastrService) {}
+  constructor(/* private toastr: ToastrService */) {}
 
   private show(textOrTpl: string, options: IOption = {}) {
-    this.toasts.push({ textOrTpl, ...options });
+    // this.toasts.push({ textOrTpl, ...options });
 
-    this.toastr.success(textOrTpl, options.title || '');
+    // this.toastr.success(textOrTpl, options.title || '');
   }
 
   showInfo(message: string) {

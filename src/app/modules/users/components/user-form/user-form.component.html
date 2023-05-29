@@ -25,10 +25,13 @@
         />
       </input-control>
 
+      <loader *ngIf="load$ | async"></loader>
+
       <div class="btn__wrap">
         <submit-control>
-          <button class="form__btn" [disabled]="form.invalid" type="submit">Guardar</button>
+          <button class="form__btn" type="submit">Guardar</button>
         </submit-control>
+
         <submit-control>
           <button class="form__btn" type="button" (click)="onReturn()">Volver</button>
         </submit-control>

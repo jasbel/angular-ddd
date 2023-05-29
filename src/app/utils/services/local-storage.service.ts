@@ -7,10 +7,11 @@ export type TKeyStorage =
   | 'permissionsAll'
   | 'token'
   | 'currentCenter'
-  | 'modules';
+  | 'modules'
+  | 'userLogin';
 
 @Injectable({ providedIn: 'root' })
-export class LocalStorageService {
+export class LocalService {
   // private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
 
   constructor() {}
@@ -22,10 +23,10 @@ export class LocalStorageService {
    * @property {'currentCenter'} < CenterInfoAuthModel >
    * @property {'modules'} < TModuleToEs >
    * @property {'userAuth'} < UserAuthModel >
+   * @property {'userLogin'} < IUserLogin >
    */
   public setItem<T = unknown>(key: TKeyStorage, data: T): void {
-    if (key === 'token')
-      return localStorage.setItem(key, data as unknown as string);
+    if (key === 'token') return localStorage.setItem(key, data as unknown as string);
 
     localStorage.setItem(key, JSON.stringify(data));
   }
@@ -43,6 +44,7 @@ export class LocalStorageService {
   public getItem<T = unknown>(key: TKeyStorage): T {
     const value = localStorage.getItem(key);
 
+    if (!value && key === 'userLogin') return {} as T;
     if (!value && key === 'userAuth') return {} as T;
     if (!value && key === 'permissions') return {} as T;
     if (!value && key === 'permissionsAll') return {} as T;

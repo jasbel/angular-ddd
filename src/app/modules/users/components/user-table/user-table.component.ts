@@ -27,11 +27,10 @@ export class UserTableComponent implements OnInit {
   loading$ = new BehaviorSubject<boolean>(false);
 
   dataEs = { name: 'Name' };
-  objects: IUserInfo[] = [];
+  data: IUserInfo[] = [];
   itemId: string = '';
 
   displayedColumns: ('select' | 'actions' | keyof IUserInfo)[] = ['select', 'name', 'actions'];
-  data: IUserInfo[] = [];
   dataSource = new MatTableDataSource<IUserInfo>([]);
   selection = new SelectionModel<IUserInfo>(true, []);
   queryString = new QueryString<IUserInfo>();
@@ -52,7 +51,7 @@ export class UserTableComponent implements OnInit {
     this.loading$.next(true);
     const subsc = this.userService
       .findAll(this.queryString.string)
-      .pipe(finalize(() => (this.loading$.next(false), this.mock())))
+      .pipe(finalize(() => this.loading$.next(false)))
       .subscribe((res) => {
         if (!res) return;
         this.data = res;
@@ -60,12 +59,6 @@ export class UserTableComponent implements OnInit {
       });
 
     this.unsubscribe.push(subsc);
-  }
-
-  private mock() {
-    if (isDev) {
-      this.data = mockDataUser;
-    }
   }
 
   isAllSelected() {
