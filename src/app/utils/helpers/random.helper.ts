@@ -1,7 +1,7 @@
 import { addDays, subDays } from 'date-fns';
 import { v4 } from 'uuid';
 import { sDateTime } from '../interfaces';
-import { dateToDatetime } from './date.helpers';
+import { dateToDatetime } from './date.helper';
 
 export const randomId = () => {
   return v4();

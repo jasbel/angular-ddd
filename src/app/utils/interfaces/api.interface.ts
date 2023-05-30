@@ -1,4 +1,4 @@
-import { TEnumLocalize } from './global.interfaces';
+import { TEnumLocalize } from './global.interface';
 
 export enum StatusCode {
   ok = 1000,

@@ -1,4 +1,4 @@
-import { sId } from './api.interfaces';
+import { sId } from './api.interface';
 
 export type TPath = 'dashboard' | 'users' | 'collections';
 export type TActionPath = 'list' | 'create' | 'edit' | `edit/:${sId}` | ':id';

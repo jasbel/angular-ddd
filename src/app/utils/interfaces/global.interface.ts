@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { sDate, sId } from './api.interfaces';
+import { sDate, sId } from './api.interface';
 
 export type TypeFromEnum<T> = `${Extract<T, string>}`; /* extends `${infer N extends string}` ? N : never; */
 
@@ -14,16 +14,6 @@ export type TDateES = `${number}/${number}/${number}`;
 /** Formato de fecha yyyy-MM-dd
  * @example 2022-10-28 */
 export type TDateDB = `${number}-${number}-${number}`;
-
-export enum ERole {
-  super_admin = 'Administrador',
-}
-export type TRole = keyof typeof ERole;
-
-export enum EModuleNameToEs {
-  roles = 'Gestión Roles',
-  users = 'Gestión Usuarios',
-}
 
 export enum EMonth {
   january = 1,
@@ -101,14 +91,7 @@ export type TNumMonth =
 export type TWeekDay = keyof typeof EWeekDay;
 export type TWeekDayES = TypeFromEnum<EWeekDay>;
 
-export type sModuleName = keyof typeof EModuleNameToEs | 'generic' | '';
-export type TModuleToEs = { [key in keyof typeof EModuleNameToEs]: string };
 
-export type TActionPermissionCore = 'create' | 'update' | 'list' | 'delete';
-export type TActionPermission = TActionPermissionCore | 'all';
-export type TModulePermission = `${sModuleName}_${TActionPermission}`;
-
-export type IPermissionActions = { [key in sModuleName]: TActionPermission[] };
 
 export enum ETypeTitle {
   viewer = 'Ver',

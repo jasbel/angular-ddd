@@ -1,6 +1,7 @@
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { dafaultTime, TModeFilter } from '..';
+import { TModeFilter } from 'src/app/utils';
+import { dafaultTime } from '../config';
 
 export interface ArgsPage {
   perPage?: number;

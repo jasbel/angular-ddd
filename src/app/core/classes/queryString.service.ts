@@ -8,7 +8,7 @@ import {
   TFilterValue,
   ISort,
   consoleLog,
-} from '..';
+} from 'src/app/utils';
 
 export interface ArgsQueryString<F> {
   pagesize?: number;

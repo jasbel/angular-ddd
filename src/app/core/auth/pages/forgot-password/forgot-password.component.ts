@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { first } from 'rxjs/operators';
 
 enum ErrorStates {
   NotSubmitted,

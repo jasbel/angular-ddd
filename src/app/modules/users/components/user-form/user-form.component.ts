@@ -3,12 +3,22 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { v4 } from 'uuid';
 
-import { ETypeTitle, TRoutePattern, TTypeForm, sId } from 'src/app/utils';
+import {
+  ERole,
+  ETypeTitle,
+  TRole,
+  TRoutePattern,
+  TTypeForm,
+  enumToKeyList,
+  enumToOptionList,
+  sId,
+} from 'src/app/utils';
 import { UserCreateModel, UserUpdateModel } from '../../models';
 import { UserService } from '../../services';
 import { UserES } from '../../helpers';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LocalStore } from 'src/app/core/services/local.store';
 
 @Component({
   selector: 'user-form',
@@ -20,14 +30,18 @@ export class UserFormComponent implements OnInit {
 
   form = this.formBuilder.group({
     id: [<sId>v4(), Validators.required],
-    name: ['', Validators.required],
+    username: ['', Validators.required],
+    role: [null as unknown as TRole, Validators.required],
     password: ['', [Validators.required]],
     cPassword: ['', [Validators.required]],
   });
 
   load$ = new BehaviorSubject<boolean>(false);
+  loadRole$ = new BehaviorSubject<boolean>(false);
 
   dataEs = UserES;
+  roles = enumToKeyList(ERole);
+  roleEs = ERole;
 
   itemId: sId | null = null;
 
@@ -44,19 +58,33 @@ export class UserFormComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService // private toast: ToastService
+    private toastr: ToastrService, // private toast: ToastService
+    private localStore: LocalStore // private toast: ToastService
   ) {
     this.load$ = this.userService.isLoadingSubject;
+    this.form.valueChanges.subscribe((data) => {
+      console.log({ data });
+      this.localStore.setItem('user', data);
+    });
   }
 
   ngOnInit() {
+    this.setCacheForm();
+
     if (this.typeForm === 'update') this.findOne();
+  }
+
+  private setCacheForm() {
+    const _form = this.localStore.getItem('user');
+    _form && this.form.patchValue(_form);
   }
 
   private findOne() {
     this.itemId = (this.route.snapshot.paramMap.get('id') || '') as sId;
 
     if (!this.itemId) return;
+
+    // this.clearForm();
 
     this.userService
       .findOne(this.itemId)
@@ -75,7 +103,7 @@ export class UserFormComponent implements OnInit {
     const data = new UserCreateModel(this.form.getRawValue());
 
     this.userService.create(data).subscribe({
-      next: (resp) => resp && this.onReturn(),
+      next: (resp) => resp && this.processComplete(),
       complete: () => {},
     });
   }
@@ -84,7 +112,7 @@ export class UserFormComponent implements OnInit {
     const data = new UserUpdateModel(this.form.getRawValue());
 
     this.userService.update(data, this.form.controls.id.value).subscribe({
-      next: (resp) => resp && this.onReturn(),
+      next: (resp) => resp && this.processComplete(),
       complete: () => {},
     });
   }
@@ -98,6 +126,15 @@ export class UserFormComponent implements OnInit {
     if (msg) this.toastr.error('Warning!', msg);
 
     return !msg;
+  }
+
+  private processComplete() {
+    this.clearForm();
+    this.onReturn();
+  }
+  private clearForm() {
+    this.localStore.clearItem('user');
+    this.form.reset();
   }
 
   onReturn = () => {

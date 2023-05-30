@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IError, ErrorGeneric, ApiResponseModel, StatusCode } from '..';
+import { ApiResponseModel, IError, StatusCode } from 'src/app/utils';
+import { ErrorGeneric } from '../classes/error.model';
 
 @Injectable({ providedIn: 'root' })
 export class CommonServerService {

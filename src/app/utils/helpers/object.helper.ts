@@ -72,3 +72,8 @@ export const enumToOptionList = <T extends object>(enumObj: T): IOption<keyof T>
   }));
   return _list;
 };
+
+export const enumToKeyList = <T extends object>(enumObj: T): (keyof T)[] => {
+  const _list: (keyof T)[] = Object.entries(enumObj).map(([k, v]) => k as keyof T);
+  return _list;
+};

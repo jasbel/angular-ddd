@@ -1,4 +1,4 @@
-import { ArgsQueryString } from 'src/app/utils';
+import { ArgsQueryString } from 'src/app/core/classes';
 
 export const initPerPage = 100000;
 

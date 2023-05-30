@@ -19,6 +19,7 @@ import { SubmitControlComponent } from './components/submit-control.components';
 import { FormTitleComponent } from './components/form-title/form-title.component';
 import { TableComponent } from './components/table/table.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { SelectControlComponent } from './components/select-control.components';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FilterComponent } from './components/filter/filter.component';
     ErrorDisplayComponent,
     LogoComponent,
     InputControlComponent,
+    SelectControlComponent,
     SubmitControlComponent,
     FormTitleComponent,
     TableComponent,
@@ -53,6 +55,7 @@ import { FilterComponent } from './components/filter/filter.component';
     ErrorDisplayComponent,
     LogoComponent,
     InputControlComponent,
+    SelectControlComponent,
     SubmitControlComponent,
     FormTitleComponent,
     TableComponent,

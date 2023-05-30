@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { IUserCreate, IUserInfo, IUserUpdate } from '../models';
-import { UserApiService } from './user-api.service';
+import { UserApiService } from './api/user-api.service';
 import { UserES } from '../helpers';
-import { CommonServerService, IError, StatusCode, getNotifyString, sId } from 'src/app/utils';
+import { IError, StatusCode, getNotifyString, sId } from 'src/app/utils';
+import { CommonServerService } from 'src/app/core/services';
 
 @Injectable({
   providedIn: 'root',

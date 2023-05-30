@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { HttpService, ApiResponseModel, EEndpoint, sId } from 'src/app/utils';
-import { IUser, IUserCreate, IUserInfo, IUserUpdate } from '../models';
+import { ApiResponseModel, EEndpoint, sId } from 'src/app/utils';
+import { IUserCreate, IUserInfo, IUserUpdate } from '../../models';
+import { HttpService } from 'src/app/core/services';
 
 @Injectable({ providedIn: 'root' })
 export class UserApiService {

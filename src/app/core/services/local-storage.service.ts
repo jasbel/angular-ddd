@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TRole } from '../interfaces';
+import { TRole } from 'src/app/utils';
 
 export type TKeyStorage =
   | 'userAuth'
@@ -67,7 +67,12 @@ export class LocalService {
     localStorage.removeItem(key);
   }
 
-  public clear() {
-    localStorage.clear();
+  public clearAll() {
+    localStorage.removeItem('userLogin');
+    localStorage.removeItem('userAuth');
+    localStorage.removeItem('permissions');
+    localStorage.removeItem('permissionsAll');
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentCenter');
   }
 }

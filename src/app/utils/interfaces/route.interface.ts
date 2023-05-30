@@ -1,6 +1,6 @@
 import { Route, Routes } from '@angular/router';
-import { sModuleName, TActionPermission, TRole } from './global.interfaces';
-import { INav } from './routeNavigation.interfaces';
+import { INav } from './route-navigation.interface';
+import { TActionPermission, TRole, sModuleName } from './role-permission.interface';
 
 type RouteData = {
   // title: string;

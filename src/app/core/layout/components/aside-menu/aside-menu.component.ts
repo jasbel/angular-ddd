@@ -1,4 +1,4 @@
-import { TRoutePattern } from './../../../../utils/interfaces/routeNavigation.interfaces';
+import { TRoutePattern } from '../../../../utils/interfaces/route-navigation.interface';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';

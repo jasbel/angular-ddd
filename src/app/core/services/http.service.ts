@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, share, tap } from 'rxjs/operators';
 
+import { AuthSingleGenericService } from './auth-generic.service';
 import {
-  API_URL,
   ApiResponseEnumModel,
   ApiResponseModel,
   EErrorMsgCore,
@@ -15,9 +15,9 @@ import {
   clearNullorEmptyorUndefined,
   getNotifyString,
   sId,
-} from '..';
-import { AuthSingleGenericService } from './auth-generic.service';
-import { ErrorGeneric } from '..';
+} from 'src/app/utils';
+import { ErrorGeneric } from '../classes/error.model';
+import { API_URL } from '../config';
 
 type TModelES<T> = { [key in keyof T]: string };
 

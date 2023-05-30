@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, finalize, first, map } from 'rxjs/operators';
 
 import { ApiResponseModel, EEndpoint } from 'src/app/utils';
-import { API_URL } from 'src/app/utils/config';
+import { API_URL } from 'src/app/core/config';
 import { AuthUserModel, LoginModel, LoginResponse } from '../../models';
 
 @Injectable({

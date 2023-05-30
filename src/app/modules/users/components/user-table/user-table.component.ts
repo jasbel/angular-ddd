@@ -5,11 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, finalize } from 'rxjs';
-import { QueryString, TRoutePattern, isDev, sId } from 'src/app/utils';
+import { TRoutePattern, sId } from 'src/app/utils';
 import { UserService } from '../../services';
 import { IUserInfo } from '../../models';
-import { v4 } from 'uuid';
-import { mockDataUser } from '../../helpers/user.mock';
+import { QueryString } from 'src/app/core/classes';
+import { UserES } from '../../helpers';
 
 export interface IRangeDate {
   fromDate: Date | null;
@@ -26,11 +26,11 @@ export class UserTableComponent implements OnInit {
 
   loading$ = new BehaviorSubject<boolean>(false);
 
-  dataEs = { name: 'Name' };
+  dataEs = UserES;
   data: IUserInfo[] = [];
   itemId: string = '';
 
-  displayedColumns: ('select' | 'actions' | keyof IUserInfo)[] = ['select', 'name', 'actions'];
+  displayedColumns: ('select' | 'actions' | keyof IUserInfo)[] = ['select', 'username', 'actions'];
   dataSource = new MatTableDataSource<IUserInfo>([]);
   selection = new SelectionModel<IUserInfo>(true, []);
   queryString = new QueryString<IUserInfo>();

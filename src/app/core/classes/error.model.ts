@@ -1,4 +1,4 @@
-import { IError, IHeaders, ApiResponseModel, StatusCode } from '../interfaces';
+import { IError, IHeaders, ApiResponseModel, StatusCode } from '../../utils/interfaces';
 
 export class ErrorGeneric<T = void> implements IError<T> {
   headers: IHeaders;

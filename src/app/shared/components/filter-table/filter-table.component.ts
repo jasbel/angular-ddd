@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TModeFilter, sDate } from 'src/app/utils';
-import { dafaultTime } from 'src/app/utils/config';
+import { dafaultTime } from 'src/app/core/config';
 
 export interface IRangeDate {
   fromDate: Date | null;

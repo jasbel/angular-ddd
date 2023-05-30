@@ -1,14 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, finalize, map, of, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { LocalService } from 'src/app/utils/services';
 import { ApiResponseModel } from 'src/app/utils';
 import { environment } from 'src/environments/environments';
 import { AuthApiService } from './auth-api';
 import { IAuthUser, IUserLogin, LoginModel, UserAuthModel } from '../models';
-import { AuthStatus, CheckTokenResponse } from '../models';
+import { AuthStatus } from '../models';
+import { LocalService } from '../../services';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +45,29 @@ export class AuthService {
     this.local.setItem('userLogin', user);
 
     return true;
+  }
+
+  getUserByToken(): Observable<IUserLogin | undefined> {
+    const auth = this.getAuthFromLocalStorage();
+    if (!auth || !auth.token) return of(undefined);
+
+    const user = this.local.getItem<IUserLogin>('userLogin');
+    if (!user) return of(undefined);
+
+    this._currentUser.set(user);
+
+    return of(user);
+  }
+
+  private getAuthFromLocalStorage(): UserAuthModel | undefined {
+    try {
+      const authData = this.local.getItem<UserAuthModel>('userAuth');
+      if (!authData) return undefined;
+      return authData;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
   }
 
   login(_data: LoginModel): Observable<boolean> {
@@ -90,7 +113,7 @@ export class AuthService {
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
 
-    this.local.clear();
+    this.local.clearAll();
     this.router.navigate(['/auth/login'], { queryParams: {} });
   }
 

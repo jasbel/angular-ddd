@@ -3,8 +3,13 @@
     <form class="form" autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
       <form-title> {{ title }} </form-title>
 
-      <input-control label="{{ dataEs.name }}">
-        <input class="form__input" type="name" formControlName="name" placeholder="Ingrese {{ dataEs.name }}" />
+      <input-control label="{{ dataEs.username }}">
+        <input
+          class="form__input"
+          type="username"
+          formControlName="username"
+          placeholder="Ingrese {{ dataEs.username }}"
+        />
       </input-control>
 
       <input-control label="{{ dataEs.password }}">
@@ -24,6 +29,14 @@
           placeholder="Repita su {{ dataEs.password }}"
         />
       </input-control>
+
+      <select-control label="{{ dataEs.role }}">
+        <select class="form__input form-select" formControlName="role">
+          <option [value]="null" selected disabled>Seleccione {{ dataEs.role }}...</option>
+          <option *ngFor="let role of roles" [value]="role">{{ roleEs[role] }}</option>
+          <option *ngIf="loadRole$|async"><loader></loader>></option>
+        </select>
+      </select-control>
 
       <loader *ngIf="load$ | async"></loader>
 
