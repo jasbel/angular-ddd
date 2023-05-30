@@ -87,6 +87,11 @@ export class UserTableComponent implements OnInit {
     return _selected.includes(current);
   }
 
+  onDelete(id: sId) {
+    const _link: TRoutePattern = `/users/${id}`;
+    this.router.navigate([_link]);
+  }
+
   onEdit(id: sId) {
     const _link: TRoutePattern = `/users/${id}`;
     this.router.navigate([_link]);

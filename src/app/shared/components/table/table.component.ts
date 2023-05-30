@@ -53,7 +53,7 @@ export class TableComponent<T extends Object = IDisplayColumns> implements OnIni
   ngAfterViewInit() {
     this.displayedColumns = <string[]>this.columns;
     this.dataSource.sort = this.sort;
-  } 
+  }
 
   ngOnInit(): void {}
 

@@ -25,7 +25,7 @@ export class DashboardMainComponent implements OnInit {
 
   columns: KTDashboard[] = ['id', 'name'];
   columnEs: SKTDashboard = { id: 'Id', name: 'Nombre' };
-  data: IDashboard[] = [{ id: 'Id0', name: 'Nombre0' }];
+  data: IDashboard[] = [];
   loading$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {

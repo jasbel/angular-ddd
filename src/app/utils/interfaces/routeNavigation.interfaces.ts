@@ -16,6 +16,7 @@ export type INav =
 
 export type TRoutePattern =
   | `/`
+  | `/auth/login`
   | `/dashboard`
   | `/collections`
   | `/collections/create`

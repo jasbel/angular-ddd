@@ -9,15 +9,16 @@ const routes: Routes & CustomRoutes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'dashboard',
-        canActivate: [],
-        loadChildren: () => import('../../modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-      },
-      {
         path: 'users',
         canActivate: [],
         loadChildren: () => import('../../modules/users/users.module').then((m) => m.UsersModule),
       },
+      {
+        path: 'dashboard',
+        canActivate: [],
+        loadChildren: () => import('../../modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+      },
+
       {
         path: 'collections',
         canActivate: [],
