@@ -30,7 +30,7 @@ export class UserTableComponent implements OnInit {
   data: IUserInfo[] = [];
   itemId: string = '';
 
-  displayedColumns: ('select' | 'actions' | keyof IUserInfo)[] = ['select', 'username', 'actions'];
+  displayedColumns: ('select' | 'actions' | keyof IUserInfo)[] = ['select', 'username', 'role', 'actions'];
   dataSource = new MatTableDataSource<IUserInfo>([]);
   selection = new SelectionModel<IUserInfo>(true, []);
   queryString = new QueryString<IUserInfo>();

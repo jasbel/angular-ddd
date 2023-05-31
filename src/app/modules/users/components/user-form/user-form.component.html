@@ -34,11 +34,11 @@
         <select class="form__input form-select" formControlName="role">
           <option [value]="null" selected disabled>Seleccione {{ dataEs.role }}...</option>
           <option *ngFor="let role of roles" [value]="role">{{ roleEs[role] }}</option>
-          <option *ngIf="loadRole$|async"><loader></loader>></option>
+          <option *ngIf="loadRole$ | async"><loader></loader>></option>
         </select>
       </select-control>
 
-      <loader *ngIf="load$ | async"></loader>
+      <loader *ngIf="(load$ | async)" [container]="true" />
 
       <div class="btn__wrap">
         <submit-control>

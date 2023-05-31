@@ -3,4 +3,5 @@ export enum EEndpoint {
   collection = '/collections',
   user = '/users',
   dashboard = '/collections',
+  totalizer = '/totalizers',
 }

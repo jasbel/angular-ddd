@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FilterTableComponent } from './components/filter-table/filter-table.component';
 import { ErrorDisplayComponent } from './components/error-display/error-display.component';
@@ -34,7 +35,7 @@ import { SelectControlComponent } from './components/select-control.components';
     SubmitControlComponent,
     FormTitleComponent,
     TableComponent,
-    FilterComponent
+    FilterComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +46,7 @@ import { SelectControlComponent } from './components/select-control.components';
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
   ],
   exports: [
@@ -59,7 +61,7 @@ import { SelectControlComponent } from './components/select-control.components';
     SubmitControlComponent,
     FormTitleComponent,
     TableComponent,
-    FilterComponent
+    FilterComponent,
   ],
 })
 export class SharedModule {}

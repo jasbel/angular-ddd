@@ -53,10 +53,10 @@ export class UserService extends CommonServerService {
     );
   }
 
-  update(data: IUserUpdate, dataId: string): Observable<true | undefined> {
+  update(data: IUserUpdate, id: sId): Observable<true | undefined> {
     this.isLoadingSubject.next(true);
 
-    return this.userApiService.update(data, dataId).pipe(
+    return this.userApiService.update(data, id).pipe(
       map((resp) => this.processOK(resp, StatusCode.updated)),
       catchError((err: IError<IUserUpdate>) => this.processError(err, UserES)),
       finalize(() => this.isLoadingSubject.next(false))
@@ -70,7 +70,7 @@ export class UserService extends CommonServerService {
     );
   }
 
-  activeDeactive(id: string, active: boolean): Observable<true | undefined> {
+  activeDeactive(id: sId, active: boolean): Observable<true | undefined> {
     return this.userApiService.actived(id, active).pipe(
       map((res) => this.processOK(res, StatusCode.updated)),
       catchError((err: IError) => this.processError(err))

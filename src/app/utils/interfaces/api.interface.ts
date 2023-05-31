@@ -84,3 +84,10 @@ export type sDateTime = /* `${sDate} ${sTime}` */ Date;
 
 type TCode = `${number}${string}`;
 export type sId = `${TCode}-${TCode}-${TCode}-${TCode}-${TCode}`;
+
+export interface IAdapter<TL = unknown, TC = TL, TU = TC> {
+  adaptOne(item: any): TL;
+  adaptAll(data: any): TL[];
+  adaptCreateApi(item: any): TC;
+  adaptUpdateApi(item: any): TU;
+}

@@ -88,7 +88,7 @@ export class UserFormComponent implements OnInit {
 
     this.userService
       .findOne(this.itemId)
-      .subscribe((resp) => !!resp && this.form.patchValue({ ...resp, cPassword: resp.password }));
+      .subscribe((resp) => !!resp && this.form.patchValue({ ...resp }));
   }
 
   onSubmit() {

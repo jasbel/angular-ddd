@@ -1,14 +1,14 @@
 import { sId } from 'src/app/utils';
 
 type TRole = 'super_admin';
-type TModule = 'user';
+export type TModule = 'user';
 type TPermission = 'delete' | 'update' | 'create' | 'list';
 
 export interface LoginResponse {
   token: string;
   id: sId;
   name: string;
-  roles: TRole[];
+  role: TRole;
   permissions: `${TModule}_${TPermission}`[];
   modules: { [key in TModule]: string };
 }

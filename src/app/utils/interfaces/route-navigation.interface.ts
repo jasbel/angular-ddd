@@ -1,6 +1,6 @@
 import { sId } from './api.interface';
 
-export type TPath = 'dashboard' | 'users' | 'collections';
+export type TPath = 'dashboard' | 'users' | 'collections' | 'totalizers';
 export type TActionPath = 'list' | 'create' | 'edit' | `edit/:${sId}` | ':id';
 export type TTypeId = 'id';
 
@@ -20,6 +20,7 @@ export type TRoutePattern =
   | `/dashboard`
   | `/collections`
   | `/collections/create`
+  | `/totalizers`
   | `/users`
   | `/users/create`
   | `/users/list`

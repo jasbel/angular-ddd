@@ -1,14 +1,12 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, signal } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, finalize, map, of, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { ApiResponseModel } from 'src/app/utils';
-import { environment } from 'src/environments/environments';
 import { AuthApiService } from './auth-api';
 import { IAuthUser, IUserLogin, LoginModel, UserAuthModel } from '../models';
 import { AuthStatus } from '../models';
-import { LocalService } from '../../services';
+import { AuthLocalService } from '../../services';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +18,6 @@ export class AuthService {
   isLoadingSubject: BehaviorSubject<boolean>;
   isLoading$: Observable<boolean>;
 
-  private readonly baseUrl: string = environment.baseUrl;
-  private http = inject(HttpClient);
-
   private _currentUser = signal<IUserLogin | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
 
@@ -30,28 +25,18 @@ export class AuthService {
     return this._currentUser();
   }
 
-  constructor(private authHttpService: AuthApiService, private router: Router, private local: LocalService) {
+  constructor(private authHttpService: AuthApiService, private router: Router, private authLocal: AuthLocalService) {
     this.checkAuthStatus().subscribe();
 
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  private setAuthentication(user: IUserLogin, token: string): boolean {
-    this._currentUser.set(user);
-    this._authStatus.set(AuthStatus.authenticated);
-
-    this.local.setItem('token', token);
-    this.local.setItem('userLogin', user);
-
-    return true;
-  }
-
   getUserByToken(): Observable<IUserLogin | undefined> {
     const auth = this.getAuthFromLocalStorage();
     if (!auth || !auth.token) return of(undefined);
 
-    const user = this.local.getItem<IUserLogin>('userLogin');
+    const user = this.authLocal.getItem('userLogin');
     if (!user) return of(undefined);
 
     this._currentUser.set(user);
@@ -61,7 +46,7 @@ export class AuthService {
 
   private getAuthFromLocalStorage(): UserAuthModel | undefined {
     try {
-      const authData = this.local.getItem<UserAuthModel>('userAuth');
+      const authData = this.authLocal.getItem('userAuth');
       if (!authData) return undefined;
       return authData;
     } catch (error) {
@@ -75,8 +60,10 @@ export class AuthService {
     return this.authHttpService.login(_data).pipe(
       map((res) => {
         const { data } = res;
-        const { id, name } = data[0];
-        return this.setAuthentication({ id, name }, data[0].token);
+        this.authLocal.setAuthLogin(data[0]);
+        this._currentUser.set({ id: data[0].id, name: data[0].name });
+        this._authStatus.set(AuthStatus.authenticated);
+        return true;
       }),
       catchError((err) => throwError(() => err.error.message)),
       finalize(() => this.isLoadingSubject.next(false))
@@ -85,15 +72,15 @@ export class AuthService {
 
   checkAuthStatus(): Observable<boolean> {
     // const url = `${this.baseUrl}/auth/check-token`;
-    const token = this.local.getItem<string>('token');
-    const user = this.local.getItem<IUserLogin>('userLogin');
+    const token = this.authLocal.getItem('token');
+    const user = this.authLocal.getItem('userLogin');
 
     if (!token || !user) {
       this.logout();
       return of(false);
     }
 
-    return of(this.setAuthentication(user, token));
+    return of(true);
 
     /*  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -113,7 +100,7 @@ export class AuthService {
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
 
-    this.local.clearAll();
+    this.authLocal.clearAll();
     this.router.navigate(['/auth/login'], { queryParams: {} });
   }
 

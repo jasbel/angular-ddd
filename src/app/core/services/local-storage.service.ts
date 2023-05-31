@@ -1,59 +1,58 @@
 import { Injectable } from '@angular/core';
-import { TRole } from 'src/app/utils';
+import { IPermissionActions, TModuleToEs, TRole } from 'src/app/utils';
+import { IUserLogin, LoginResponse, TModule, UserAuthModel } from '../auth';
+import { joinKeyModuleWithPermissions, separeModuleAndPermission } from '../auth/helpers/permission.helpers';
 
-export type TKeyStorage =
-  | 'userAuth'
-  | 'permissions'
-  | 'permissionsAll'
-  | 'token'
-  | 'currentCenter'
-  | 'modules'
-  | 'userLogin';
+type TypeMapping = {
+  role: TRole;
+  token: string;
+  permissions: IPermissionActions;
+  permissionsAll: IPermissionActions;
+  modules: TModule[];
+  userAuth: UserAuthModel;
+  userLogin: IUserLogin;
+};
 
 @Injectable({ providedIn: 'root' })
-export class LocalService {
-  // private authLocalStorageToken = `${environment.appVersion}-${environment.USERDATA_KEY}`;
-
+export class AuthLocalService {
   constructor() {}
 
-  /**
-   * @property {'permissions'} < IPermissionActions >
-   * @property {'permissionsAll'} < IPermissionActions >
-   * @property {'token'} < string >
-   * @property {'currentCenter'} < CenterInfoAuthModel >
-   * @property {'modules'} < TModuleToEs >
-   * @property {'userAuth'} < UserAuthModel >
-   * @property {'userLogin'} < IUserLogin >
-   */
-  public setItem<T = unknown>(key: TKeyStorage, data: T): void {
-    if (key === 'token') return localStorage.setItem(key, data as unknown as string);
+  public setAuthLogin(data: LoginResponse): void {
+    const _permissionsArray = separeModuleAndPermission(data.permissions);
+    const _permissions: IPermissionActions = joinKeyModuleWithPermissions(_permissionsArray);
+    const _modules: TModule[] = Object.keys(data.modules) as TModule[];
+
+    this.setItem('userLogin', { id: data.id, name: data.name });
+    this.setItem('modules', _modules);
+    this.setItem('permissions', _permissions);
+    this.setItem('role', data.role);
+    this.setItem('token', data.token);
+  }
+
+  public setItem<K extends keyof TypeMapping>(key: K, data: TypeMapping[K]): void {
+    if (key === 'token') return localStorage.setItem(key, data as string);
 
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  /**
-   * @param userAuth
-   * @returns UserAuthModel;
-   * @param permissions
-   * @returns IPermissionActions;
-   * @param token
-   * @returns string;
-   * @param currentCenter
-   * @returns CenterInfoAuthModel;
-   */
-  public getItem<T = unknown>(key: TKeyStorage): T {
+  public getItem<K extends keyof TypeMapping>(key: K): TypeMapping[K] {
     const value = localStorage.getItem(key);
 
-    if (!value && key === 'userLogin') return {} as T;
-    if (!value && key === 'userAuth') return {} as T;
-    if (!value && key === 'permissions') return {} as T;
-    if (!value && key === 'permissionsAll') return {} as T;
-    if (!value && key === 'token') return '' as unknown as T;
-    if (!value && key === 'currentCenter') return {} as T;
+    if (!value) {
+      switch (key) {
+        case 'userLogin':
+        case 'userAuth':
+        case 'permissions':
+        case 'permissionsAll':
+          return {} as TypeMapping[K];
+        case 'token':
+          return '' as unknown as TypeMapping[K];
+      }
+    }
 
-    if (key === 'token') return value as unknown as T;
+    if (key === 'token') return value as unknown as TypeMapping[K];
 
-    return JSON.parse(value || '') as T;
+    return JSON.parse(value || '') as TypeMapping[K];
   }
 
   public getRole(): TRole {
@@ -63,7 +62,7 @@ export class LocalService {
     return value.role;
   }
 
-  public removeItem(key: TKeyStorage): void {
+  public removeItem<K extends keyof TypeMapping>(key: K): void {
     localStorage.removeItem(key);
   }
 

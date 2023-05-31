@@ -8,6 +8,11 @@ const Routing: Routes & CustomRoutes = [
     loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
   },
   {
+    path: 'totalizers',
+    canActivate: [],
+    loadChildren: () => import('../modules/totalizer/totalizer.module').then((m) => m.TotalizerModule),
+  },
+  {
     path: 'dashboard',
     canActivate: [],
     loadChildren: () => import('../modules/dashboard/dashboard.module').then((m) => m.DashboardModule),

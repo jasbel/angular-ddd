@@ -1,5 +1,15 @@
-<ng-container *ngIf="!hidden">
-  <span>
-    <span class="spinner-border spinner-border-sm ms-2 me-2 "></span> {{title}}...
-  </span>
+<ng-container *ngIf="container; else nocontainer">
+  <div class="text-center">
+    <span class="a-loader">
+      <spinner /> <span>{{ title }}...</span>
+    </span>
+  </div>
 </ng-container>
+
+<ng-template #nocontainer>
+  <ng-container *ngIf="!hidden">
+    <span class="a-loader">
+      <spinner /> <span>{{ title }}...</span>
+    </span>
+  </ng-container>
+</ng-template>

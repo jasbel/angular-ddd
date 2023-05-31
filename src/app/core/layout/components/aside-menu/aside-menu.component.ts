@@ -15,12 +15,12 @@ enum EMenuIcon {
 
 enum EMenuTitle {
   user = 'Usuarios',
+  totalizer = 'Totalizadores',
   collection = 'Coleccion',
   dashboard = 'Dashboard',
   dated = 'Datos',
   readed = 'Lecturas',
   oil = 'Aceites',
-  totalized = 'Totalizadores',
   dispatched = 'Despachos',
   sale = 'Ventas',
   bankOperation = 'Op. Bancarias',
@@ -46,6 +46,12 @@ interface IMenu extends IMenuSingle {
 }
 
 const dataMenu: IMenu[] = [
+  {
+    name: EMenuTitle.totalizer,
+    link: '',
+    icon: '',
+    children: [{ name: EMenuType.list, icon: EMenuIcon.list, link: '/totalizers' }],
+  },
   {
     name: EMenuTitle.collection,
     link: '',
@@ -80,12 +86,7 @@ const dataMenu: IMenu[] = [
     icon: '',
     children: [{ name: EMenuType.list, icon: EMenuIcon.list, link: '/dashboard' }],
   },
-  {
-    name: EMenuTitle.totalized,
-    link: '',
-    icon: '',
-    children: [{ name: EMenuType.list, icon: EMenuIcon.list, link: '/dashboard' }],
-  },
+
   {
     name: EMenuTitle.dispatched,
     link: '',

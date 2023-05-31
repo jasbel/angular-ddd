@@ -1,0 +1,120 @@
+<filter-table></filter-table>
+
+<section class="mb-3 table__container" tabindex="0">
+  <select [disabled]="disabledMode" [(ngModel)]="mode" class="mb-10">
+    <option [value]="'minimum'">{{ modeEs.minimum }}</option>
+    <option [value]="'capture'">{{ modeEs.capture }}</option>
+    <option [value]="'analysis'">{{ modeEs.analysis }}</option>
+  </select>
+
+  <ng-container *ngIf="mode === 'minimum'">
+    <table class="table">
+      <tr>
+        <td class="table__title">{{ dataSingleEs.typePay }}</td>
+        <td class="table__title">{{ dataSingleEs.totalSale }}</td>
+      </tr>
+
+      <ng-container *ngFor="let single of item.collection">
+        <tr>
+          <td>{{ typePayEs[single.typePay] }}</td>
+          <td>{{ single.totalSale }}</td>
+        </tr>
+      </ng-container>
+
+      <tr>
+        <td class="table__title">{{ dataEs.total }}</td>
+        <td>{{ item.total }}</td>
+      </tr>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="mode === 'capture'">
+    <table class="table">
+      <tr>
+        <td class="table__title">{{ dataSingleEs.typePay }}</td>
+        <td class="table__title">{{ dataSingleEs.totalSale }}</td>
+        <td class="table__title">{{ dataSingleEs.totalCollection }}</td>
+      </tr>
+
+      <ng-container *ngFor="let single of item.collection">
+        <tr>
+          <td>{{ typePayEs[single.typePay] }}</td>
+          <td>{{ single.totalSale }}</td>
+          <td>{{ single.totalCollection }}</td>
+        </tr>
+      </ng-container>
+
+      <tr>
+        <td class="table__hidden"></td>
+        <td class="table__title">{{ dataEs.depositValues }}</td>
+        <td>{{ item.depositValues }}</td>
+      </tr>
+
+      <tr>
+        <td class="table__hidden"></td>
+        <td class="table__title">{{ dataEs.total }}</td>
+        <td>{{ item.total }}</td>
+      </tr>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="mode === 'analysis'">
+    <table class="table">
+      <tr>
+        <td class="table__hidden"></td>
+        <td class="table__title">{{ dataEs.total }}</td>
+        <td>{{ item.total }}</td>
+      </tr>
+      <tr>
+        <td class="table__hidden"></td>
+        <td class="table__title">{{ dataEs.depositValues }}</td>
+        <td>{{ item.depositValues }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="table__hidden"></td>
+      </tr>
+      <tr>
+        <td class="table__title">{{ dataSingleEs.typePay }}</td>
+        <td class="table__title">{{ dataSingleEs.totalSale }}</td>
+        <td class="table__title">{{ dataSingleEs.totalCollection }}</td>
+      </tr>
+
+      <ng-container *ngFor="let single of item.collection">
+        <tr>
+          <td>{{ typePayEs[single.typePay] }}</td>
+          <td>{{ single.totalSale }}</td>
+          <td>{{ single.totalCollection }}</td>
+        </tr>
+      </ng-container>
+
+      <tr>
+        <td class="table__hidden"></td>
+        <td class="table__title">{{ dataEs.total }}</td>
+        <td>{{ item.total }}</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="table__hidden"></td>
+        <td rowspan="3" class="table__green">
+          <div class="green__wrap">
+            <span>Sé verde</span>
+            <figure  class="green__image-wrap">
+              <img src="./assets/images/leaf.svg" alt="" />
+            </figure>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="table__title">{{ dataEs.printedTickets }}</td>
+        <td>{{ item.printedTickets }}</td>
+        <td class="table__hidden"></td>
+      </tr>
+      <tr>
+        <td class="table__title">{{ dataEs.nonPrintedTickets }}</td>
+        <td>{{ item.nonPrintedTickets }}</td>
+        <td class="table__hidden"></td>
+      </tr>
+    </table>
+  </ng-container>
+
+  <loader *ngIf="loading$ | async" [container]="true" />
+</section>

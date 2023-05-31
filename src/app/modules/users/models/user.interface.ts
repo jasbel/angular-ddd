@@ -8,6 +8,6 @@ export interface IUser {
   cPassword: string;
 }
 
-export interface IUserInfo extends Pick<IUser, 'id' | 'username' | 'password' | 'role'> {}
+export interface IUserInfo extends Pick<IUser, 'id' | 'username' | 'role'> {}
 export interface IUserUpdate extends Pick<IUser, 'username' | 'password' | 'role'> {}
 export interface IUserCreate extends IUserUpdate, Pick<IUser, 'id'> {}
